@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class CategoriaVehiculo : AuditableBaseEntity
+    public class Marca : AuditableBaseEntity
     {
         public string Nombre { get; set; }
 
-        public string Descripcion { get; set; }
+        public int CategoriaVehiculoId { get; set; }
 
-        public ICollection<Marca> Marcas { get; set; }
+        public CategoriaVehiculo CategoriaVehiculo { get; set; }
     }
 }
