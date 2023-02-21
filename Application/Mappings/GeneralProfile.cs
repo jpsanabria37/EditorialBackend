@@ -23,12 +23,11 @@ namespace Application.Mappings
             CreateMap<CreateClientCommand, Cliente>()
              .ForMember(dest => dest.Edad, opt => opt.MapFrom(src =>
                  new DateTime(DateTime.Now.Subtract(src.FechaNacimiento).Ticks).Year - 1));
+            CreateMap<CreateCategoriaVehiculoCommand, CategoriaVehiculo>();
             #endregion
 
             #region CategoriaVehiculo
-            CreateMap<CategoriaVehiculo, CategoriaVehiculoDto>();
-            CreateMap<CreateCategoriaVehiculoCommand, CategoriaVehiculo>();
-            
+            CreateMap<CategoriaVehiculo, CategoriaVehiculoDto>();            
             #endregion
         }
     }

@@ -29,14 +29,14 @@ namespace Persistence.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<CategoriaVehiculo>> GetAllAsync()
+        public async Task<IEnumerable<CategoriaVehiculo>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Set<CategoriaVehiculo>().ToListAsync();
         }
 
-        public Task<CategoriaVehiculo> GetByIdAsync(int id)
+        public async Task<CategoriaVehiculo> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Set<CategoriaVehiculo>().FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public Task UpdateAsync(CategoriaVehiculo entity)

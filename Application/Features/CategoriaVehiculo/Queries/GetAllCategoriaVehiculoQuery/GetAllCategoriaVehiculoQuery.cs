@@ -1,0 +1,64 @@
+﻿using Application.DTOs;
+using Application.Interfaces;
+using Application.Wrappers;
+using AutoMapper;
+using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using System.Text;
+
+namespace Application.Features.CategoriaVehiculo.Queries.GetAllCategoriaVehiculoQuery
+{
+    public class GetAllCategoriaVehiculoQuery : IRequest<Response<IEnumerable<CategoriaVehiculoDto>>>
+    {
+
+    }
+
+    public class GetAllCategoriaVehiculoQueryHandler : IRequestHandler<GetAllCategoriaVehiculoQuery, Response<IEnumerable<CategoriaVehiculoDto>>>
+    {
+        private readonly IRepository<Domain.Entities.CategoriaVehiculo> _repositoryAsync;
+        private readonly IMapper _mapper;
+        private readonly IDistributedCache _distributedCache;
+
+        public GetAllCategoriaVehiculoQueryHandler(IRepository<Domain.Entities.CategoriaVehiculo> repositoryAsync, IMapper mapper, IDistributedCache distributedCache)
+        {
+            _repositoryAsync = repositoryAsync;
+            _mapper = mapper;
+            _distributedCache = distributedCache;
+        }
+
+
+
+        public async Task<Response<IEnumerable<CategoriaVehiculoDto>>> Handle(GetAllCategoriaVehiculoQuery request, CancellationToken cancellationToken)
+        {
+            var cacheKey = $"listadoCategoriaVehiculos";
+            string serializedListadoCVehiculos;
+            var listadoCVehiculos = new List<Domain.Entities.CategoriaVehiculo>();
+            var redisListadoCVehiculos = await _distributedCache.GetAsync(cacheKey);
+
+            if (redisListadoCVehiculos != null)
+            {
+                serializedListadoCVehiculos = Encoding.UTF8.GetString(redisListadoCVehiculos);
+                listadoCVehiculos = JsonConvert.DeserializeObject<List<Domain.Entities.CategoriaVehiculo>>(serializedListadoCVehiculos);
+            }
+            else
+            {
+                var cVehiculos = await _repositoryAsync.GetAllAsync();
+                listadoCVehiculos = cVehiculos.ToList();
+                serializedListadoCVehiculos = JsonConvert.SerializeObject(listadoCVehiculos);
+                redisListadoCVehiculos = Encoding.UTF8.GetBytes(serializedListadoCVehiculos);
+
+                var options = new DistributedCacheEntryOptions()
+                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(2));
+
+                await _distributedCache.SetAsync(cacheKey, redisListadoCVehiculos, options);
+            }
+
+
+            var dtos = _mapper.Map<IEnumerable<CategoriaVehiculoDto>>(listadoCVehiculos);
+
+            return new Response<IEnumerable<CategoriaVehiculoDto>>(dtos);
+        }
+    }
+}
