@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Features.Clientes.Commands.CreateClientCommand;
+using Application.Features.Servicios.Commands.CreateServicioCommand;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -22,7 +23,14 @@ namespace Application.Mappings
             CreateMap<CreateClientCommand, Cliente>()
              .ForMember(dest => dest.Edad, opt => opt.MapFrom(src =>
                  new DateTime(DateTime.Now.Subtract(src.FechaNacimiento).Ticks).Year - 1));
+            CreateMap<CreateServicioCommand, Servicio>();
             #endregion
+
+            #region Servicio
+            CreateMap<Servicio, ServicioDto>();
+            #endregion
+
+
         }
     }
 }

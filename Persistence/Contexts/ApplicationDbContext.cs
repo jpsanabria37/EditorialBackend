@@ -19,6 +19,7 @@ namespace Persistence.Contexts
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Producto> Productos { get; set; }
+        public DbSet<Servicio> Servicios { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
