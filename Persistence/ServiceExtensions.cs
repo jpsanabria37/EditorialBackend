@@ -27,6 +27,7 @@ namespace Persistence
             services.AddTransient<IRepository<Producto>, ProductoRepository>();
             services.AddTransient<IRepository<CategoriaVehiculo>, CategoriaVehiculoRepository>();
             services.AddTransient<IClienteRepository, ClienteRepository>();
+            services.AddTransient<IRepository<Marca>, MarcaRepository>();
             #endregion
 
             #region Caching
