@@ -16,11 +16,8 @@ namespace Persistence.Configuration
              builder.ToTable("marcas");
 
             builder.HasKey(c => c.Id);
-            builder.Property(p => p.Id).ValueGeneratedOnAdd();
-
-           
-
-          
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();        
+                      
             builder.HasQueryFilter(c => !c.IsDeleted);
 
             builder.HasOne(p => p.CategoriaVehiculo) // la propiedad de navegación que hace referencia a la entidad Categoria

@@ -11,8 +11,8 @@ using Persistence.Contexts;
 namespace WebApi.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230221010215_AddImageClienteMigration")]
-    partial class AddImageClienteMigration
+    [Migration("20230221163433_servicio")]
+    partial class servicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,6 +161,41 @@ namespace WebApi.Migrations.ApplicationDb
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("productos", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Servicio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(120)
+                        .HasColumnType("varchar(120)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("varchar(120)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("servicios", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Producto", b =>

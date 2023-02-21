@@ -4,10 +4,10 @@ using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace WebApi.Migrations.ApplicationDb
+namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddImageClienteMigration : Migration
+    public partial class TipoDocumento : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,28 +35,22 @@ namespace WebApi.Migrations.ApplicationDb
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "clientes",
+                name: "tipo_documentos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: false),
-                    Apellido = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: false),
-                    FechaNacimiento = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Telefono = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: false),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    Direccion = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false),
-                    Edad = table.Column<int>(type: "int", nullable: false),
-                    Imagen = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true, defaultValue: "/images/user_default.png"),
-                    CreatedBy = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true),
+                    Tipo = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "longtext", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_clientes", x => x.Id);
+                    table.PrimaryKey("PK_tipo_documentos", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -87,11 +81,49 @@ namespace WebApi.Migrations.ApplicationDb
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "clientes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: false),
+                    Apellido = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: false),
+                    FechaNacimiento = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Telefono = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: false),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Direccion = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false),
+                    Edad = table.Column<int>(type: "int", nullable: false),
+                    Imagen = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true, defaultValue: "/images/user_default.png"),
+                    TipoDocumentoId = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: true),
+                    LastModified = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_clientes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_clientes_tipo_documentos_TipoDocumentoId",
+                        column: x => x.TipoDocumentoId,
+                        principalTable: "tipo_documentos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_clientes_Email",
                 table: "clientes",
                 column: "Email",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_clientes_TipoDocumentoId",
+                table: "clientes",
+                column: "TipoDocumentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_productos_CategoriaId",
@@ -107,6 +139,9 @@ namespace WebApi.Migrations.ApplicationDb
 
             migrationBuilder.DropTable(
                 name: "productos");
+
+            migrationBuilder.DropTable(
+                name: "tipo_documentos");
 
             migrationBuilder.DropTable(
                 name: "categorias");
