@@ -21,5 +21,7 @@ namespace Domain.Entities
 
         public int Edad { get; set; }
 
+        public string? Imagen { get; set; } = "/images/user_default.png";
+
     }
 }

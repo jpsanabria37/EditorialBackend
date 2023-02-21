@@ -12,9 +12,9 @@ namespace Identity.Seeds
 {
     public static class DefaultAdminUser
     {
-        public static async Task SeedAsync(IServiceProvider serviceProvider)
+        public static async Task SeedAsync(UserManager<ApplicationUser> userManager)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            
 
             var defaultUser = new ApplicationUser
             {

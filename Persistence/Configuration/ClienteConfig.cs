@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,6 +53,12 @@ namespace Persistence.Configuration
             builder.HasQueryFilter(c => !c.IsDeleted);
 
             builder.HasIndex(c => c.Email).IsUnique();
+
+            builder.Property(c => c.Imagen)
+            .HasMaxLength(1000) // Establece la longitud máxima de la ruta de la imagen a 1000 caracteres
+            .IsRequired(false) // La imagen es requerida
+            .HasDefaultValue("/images/user_default.png");
+
         }
     }
 }

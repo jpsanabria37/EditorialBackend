@@ -7,6 +7,7 @@ using Application.Features.Clientes.Queries.GetByIdClient;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI;
 using Newtonsoft.Json;
 
 namespace WebApi.Controllers.v1
@@ -33,7 +34,9 @@ namespace WebApi.Controllers.v1
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> ObtenerClientePorId(int id)
         {
-            return Ok(await Mediator.Send(new GetClientByIdQuery { Id = id }));
+            var cliente = await Mediator.Send(new GetClientByIdQuery { Id = id });
+            var json = JsonConvert.SerializeObject(cliente);
+            return Ok(json);
         }
 
         //POST api/<controller>

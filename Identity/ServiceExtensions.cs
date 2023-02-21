@@ -1,7 +1,9 @@
-﻿using Application.Wrappers;
+﻿using Application.Interfaces;
+using Application.Wrappers;
 using Domain.Settings;
 using Identity.Contexts;
 using Identity.Models;
+using Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -20,15 +22,24 @@ namespace Identity
         {
             services.AddDbContext<IdentityContext>(options =>
             {
-                options.UseMySQL(configuration.GetConnectionString("IdentityConnection"), b => b.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));
+                options.UseMySQL(configuration.GetConnectionString("IdentityConnection"), b => b.MigrationsAssembly("WebApi"));
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 // Configurar opciones de Identity aquí
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
 
             })
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
+
+            #region Services
+            services.AddTransient<IAccountService, AccountService>();
+            #endregion
 
             services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
             services.AddAuthentication(options =>

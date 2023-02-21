@@ -12,23 +12,23 @@ namespace Identity.Seeds
 {
     public static class DefaultBasicUser
     {
-        public static async Task SeedAsync(IServiceProvider serviceProvider)
+        public static async Task SeedAsync(UserManager<ApplicationUser> userManager)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        
 
             var defaultUser = new ApplicationUser
             {
-                UserName = "userAdmin",
-                Email = "useradmin@mail.com",
-                Nombre = "Juan Pablo",
-                Apellido = "Sanabria Moscoso",
+                UserName = "userBasic",
+                Email = "userbasic@mail.com",
+                Nombre = "Julian",
+                Apellido = "Forero",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
 
             if (await userManager.FindByEmailAsync(defaultUser.Email) == null)
             {
-                await userManager.CreateAsync(defaultUser, "Pablo161718!");
+                await userManager.CreateAsync(defaultUser, "Julian123!");
                 await userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
             }
         }

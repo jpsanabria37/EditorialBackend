@@ -7,7 +7,7 @@ using Persistence.Contexts;
 
 #nullable disable
 
-namespace WebApi.Migrations
+namespace WebApi.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -16,7 +16,7 @@ namespace WebApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Domain.Entities.Categoria", b =>
@@ -83,6 +83,12 @@ namespace WebApi.Migrations
 
                     b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Imagen")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)")
+                        .HasDefaultValue("/images/user_default.png");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
