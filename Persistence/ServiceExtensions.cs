@@ -25,9 +25,14 @@ namespace Persistence
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(MyRepositoryAsync<>));
             services.AddTransient<IRepository<Cliente>, ClienteRepository>();
             services.AddTransient<IRepository<Producto>, ProductoRepository>();
+            services.AddTransient<IRepository<CategoriaVehiculo>, CategoriaVehiculoRepository>();
             services.AddTransient<IClienteRepository, ClienteRepository>();
+<<<<<<< HEAD
             services.AddTransient<IRepository<Servicio>, ServicioRepository>();
 
+=======
+            services.AddTransient<IRepository<Marca>, MarcaRepository>();
+>>>>>>> febf07acb1a4761cc051f95d44f6b76dec5cea8f
             #endregion
 
             #region Caching
