@@ -7,7 +7,7 @@ using Persistence.Contexts;
 
 #nullable disable
 
-namespace WebApi.Migrations.ApplicationDb
+namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -145,10 +145,15 @@ namespace WebApi.Migrations.ApplicationDb
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
 
+                    b.Property<int>("TipoDocumentoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
+
+                    b.HasIndex("TipoDocumentoId");
 
                     b.ToTable("clientes", (string)null);
                 });
@@ -230,8 +235,12 @@ namespace WebApi.Migrations.ApplicationDb
                     b.ToTable("productos", (string)null);
                 });
 
+<<<<<<< HEAD:WebApi/Migrations/ApplicationDb/ApplicationDbContextModelSnapshot.cs
 <<<<<<< HEAD
             modelBuilder.Entity("Domain.Entities.Servicio", b =>
+=======
+            modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
+>>>>>>> feature/YennerEdition:WebApi/Migrations/ApplicationDbContextModelSnapshot.cs
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,8 +253,14 @@ namespace WebApi.Migrations.ApplicationDb
                         .HasColumnType("longtext");
 
                     b.Property<string>("Descripcion")
+<<<<<<< HEAD:WebApi/Migrations/ApplicationDb/ApplicationDbContextModelSnapshot.cs
                         .HasMaxLength(120)
                         .HasColumnType("varchar(120)");
+=======
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("varchar(80)");
+>>>>>>> feature/YennerEdition:WebApi/Migrations/ApplicationDbContextModelSnapshot.cs
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
@@ -256,6 +271,7 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("longtext");
 
+<<<<<<< HEAD:WebApi/Migrations/ApplicationDb/ApplicationDbContextModelSnapshot.cs
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -275,6 +291,27 @@ namespace WebApi.Migrations.ApplicationDb
 
                     b.Navigation("CategoriaVehiculo");
 >>>>>>> febf07acb1a4761cc051f95d44f6b76dec5cea8f
+=======
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("varchar(80)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tipo_documentos", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Cliente", b =>
+                {
+                    b.HasOne("Domain.Entities.TipoDocumento", "TipoDocumento")
+                        .WithMany("Clientes")
+                        .HasForeignKey("TipoDocumentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TipoDocumento");
+>>>>>>> feature/YennerEdition:WebApi/Migrations/ApplicationDbContextModelSnapshot.cs
                 });
 
             modelBuilder.Entity("Domain.Entities.Producto", b =>
@@ -293,9 +330,15 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Navigation("Productos");
                 });
 
+<<<<<<< HEAD:WebApi/Migrations/ApplicationDb/ApplicationDbContextModelSnapshot.cs
             modelBuilder.Entity("Domain.Entities.CategoriaVehiculo", b =>
                 {
                     b.Navigation("Marcas");
+=======
+            modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
+                {
+                    b.Navigation("Clientes");
+>>>>>>> feature/YennerEdition:WebApi/Migrations/ApplicationDbContextModelSnapshot.cs
                 });
 #pragma warning restore 612, 618
         }

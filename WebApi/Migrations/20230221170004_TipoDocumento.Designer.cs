@@ -8,11 +8,11 @@ using Persistence.Contexts;
 
 #nullable disable
 
-namespace WebApi.Migrations.ApplicationDb
+namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230221010215_AddImageClienteMigration")]
-    partial class AddImageClienteMigration
+    [Migration("20230221170004_TipoDocumento")]
+    partial class TipoDocumento
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,10 +113,15 @@ namespace WebApi.Migrations.ApplicationDb
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
 
+                    b.Property<int>("TipoDocumentoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
+
+                    b.HasIndex("TipoDocumentoId");
 
                     b.ToTable("clientes", (string)null);
                 });
@@ -163,6 +168,53 @@ namespace WebApi.Migrations.ApplicationDb
                     b.ToTable("productos", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("varchar(80)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("varchar(80)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tipo_documentos", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Cliente", b =>
+                {
+                    b.HasOne("Domain.Entities.TipoDocumento", "TipoDocumento")
+                        .WithMany("Clientes")
+                        .HasForeignKey("TipoDocumentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TipoDocumento");
+                });
+
             modelBuilder.Entity("Domain.Entities.Producto", b =>
                 {
                     b.HasOne("Domain.Entities.Categoria", "Categoria")
@@ -177,6 +229,11 @@ namespace WebApi.Migrations.ApplicationDb
             modelBuilder.Entity("Domain.Entities.Categoria", b =>
                 {
                     b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
+                {
+                    b.Navigation("Clientes");
                 });
 #pragma warning restore 612, 618
         }

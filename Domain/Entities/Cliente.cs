@@ -1,6 +1,7 @@
 ﻿using Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace Domain.Entities
         public int Edad { get; set; }
 
         public string? Imagen { get; set; } = "/images/user_default.png";
+
+        public int TipoDocumentoId  { get; set; }
+        public TipoDocumento TipoDocumento { get; set; }
 
     }
 }

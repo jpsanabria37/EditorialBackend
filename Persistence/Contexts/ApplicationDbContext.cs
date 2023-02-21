@@ -25,6 +25,8 @@ namespace Persistence.Contexts
         public DbSet<CategoriaVehiculo> CategoriaVehiculos { get; set; }
 >>>>>>> febf07acb1a4761cc051f95d44f6b76dec5cea8f
 
+        public DbSet<TipoDocumento> TipoDocumentos { get; set; }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
