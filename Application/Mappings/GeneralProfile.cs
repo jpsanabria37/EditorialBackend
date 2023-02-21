@@ -1,5 +1,7 @@
 ﻿using Application.DTOs;
+using Application.DTOs.TipoDocumentos;
 using Application.Features.Clientes.Commands.CreateClientCommand;
+using Application.Features.TipoDocumentos.Commands.CreateTipoDocumentoCommand;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -14,7 +16,6 @@ namespace Application.Mappings
     {
         public GeneralProfile()
         {
-
             #region Cliente
             CreateMap<Cliente, ClienteDto>();
             #endregion
@@ -22,6 +23,11 @@ namespace Application.Mappings
             CreateMap<CreateClientCommand, Cliente>()
              .ForMember(dest => dest.Edad, opt => opt.MapFrom(src =>
                  new DateTime(DateTime.Now.Subtract(src.FechaNacimiento).Ticks).Year - 1));
+            CreateMap<CreateTipoDocumentoCommand, TipoDocumento>();
+            #endregion
+
+            #region
+            CreateMap<TipoDocumento, TipoDocumentoDto>();
             #endregion
         }
     }
