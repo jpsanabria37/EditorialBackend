@@ -235,12 +235,10 @@ namespace WebApi.Migrations
                     b.ToTable("productos", (string)null);
                 });
 
-<<<<<<< HEAD:WebApi/Migrations/ApplicationDb/ApplicationDbContextModelSnapshot.cs
-<<<<<<< HEAD
+
             modelBuilder.Entity("Domain.Entities.Servicio", b =>
-=======
             modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
->>>>>>> feature/YennerEdition:WebApi/Migrations/ApplicationDbContextModelSnapshot.cs
+
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -253,14 +251,12 @@ namespace WebApi.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Descripcion")
-<<<<<<< HEAD:WebApi/Migrations/ApplicationDb/ApplicationDbContextModelSnapshot.cs
+
                         .HasMaxLength(120)
-                        .HasColumnType("varchar(120)");
-=======
+                        .HasColumnType("varchar(120)")
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("varchar(80)");
->>>>>>> feature/YennerEdition:WebApi/Migrations/ApplicationDbContextModelSnapshot.cs
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
@@ -271,7 +267,7 @@ namespace WebApi.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("longtext");
 
-<<<<<<< HEAD:WebApi/Migrations/ApplicationDb/ApplicationDbContextModelSnapshot.cs
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -280,67 +276,68 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("servicios", (string)null);
-=======
-            modelBuilder.Entity("Domain.Entities.Marca", b =>
-                {
-                    b.HasOne("Domain.Entities.CategoriaVehiculo", "CategoriaVehiculo")
-                        .WithMany("Marcas")
-                        .HasForeignKey("CategoriaVehiculoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
 
-                    b.Navigation("CategoriaVehiculo");
->>>>>>> febf07acb1a4761cc051f95d44f6b76dec5cea8f
-=======
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("varchar(80)");
+                    modelBuilder.Entity("Domain.Entities.Marca", b =>
+                        {
+                            b.HasOne("Domain.Entities.CategoriaVehiculo", "CategoriaVehiculo")
+                                .WithMany("Marcas")
+                                .HasForeignKey("CategoriaVehiculoId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
 
-                    b.HasKey("Id");
+                            b.Navigation("CategoriaVehiculo");
 
-                    b.ToTable("tipo_documentos", (string)null);
-                });
+                            b.Property<string>("Tipo")
+                                .IsRequired()
+                                .HasMaxLength(80)
+                                .HasColumnType("varchar(80)");
 
-            modelBuilder.Entity("Domain.Entities.Cliente", b =>
-                {
-                    b.HasOne("Domain.Entities.TipoDocumento", "TipoDocumento")
-                        .WithMany("Clientes")
-                        .HasForeignKey("TipoDocumentoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                            b.HasKey("Id");
 
-                    b.Navigation("TipoDocumento");
->>>>>>> feature/YennerEdition:WebApi/Migrations/ApplicationDbContextModelSnapshot.cs
-                });
+                            b.ToTable("tipo_documentos", (string)null);
+                        });
 
-            modelBuilder.Entity("Domain.Entities.Producto", b =>
-                {
-                    b.HasOne("Domain.Entities.Categoria", "Categoria")
-                        .WithMany("Productos")
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    modelBuilder.Entity("Domain.Entities.Cliente", b =>
+                        {
+                            b.HasOne("Domain.Entities.TipoDocumento", "TipoDocumento")
+                                .WithMany("Clientes")
+                                .HasForeignKey("TipoDocumentoId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
 
-                    b.Navigation("Categoria");
-                });
+                            b.Navigation("TipoDocumento");
 
-            modelBuilder.Entity("Domain.Entities.Categoria", b =>
-                {
-                    b.Navigation("Productos");
-                });
+                        });
 
-<<<<<<< HEAD:WebApi/Migrations/ApplicationDb/ApplicationDbContextModelSnapshot.cs
-            modelBuilder.Entity("Domain.Entities.CategoriaVehiculo", b =>
-                {
-                    b.Navigation("Marcas");
-=======
-            modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
-                {
-                    b.Navigation("Clientes");
->>>>>>> feature/YennerEdition:WebApi/Migrations/ApplicationDbContextModelSnapshot.cs
-                });
-#pragma warning restore 612, 618
+                    modelBuilder.Entity("Domain.Entities.Producto", b =>
+                        {
+                            b.HasOne("Domain.Entities.Categoria", "Categoria")
+                                .WithMany("Productos")
+                                .HasForeignKey("CategoriaId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
+
+                            b.Navigation("Categoria");
+                        });
+
+                    modelBuilder.Entity("Domain.Entities.Categoria", b =>
+                        {
+                            b.Navigation("Productos");
+                        });
+
+
+                    modelBuilder.Entity("Domain.Entities.CategoriaVehiculo", b =>
+                        {
+                            b.Navigation("Marcas");
+
+                            modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
+                        {
+                            b.Navigation("Clientes");
+                        });
+                        });
+                }));
+
         }
     }
 }
+
