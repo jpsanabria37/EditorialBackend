@@ -1,13 +1,10 @@
-﻿using Application.Features.Clientes.Commands.CreateClientCommand;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Domain.Entities;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repository;
-using Persistence.Validaciones;
 
 namespace Persistence
 {
@@ -28,11 +25,7 @@ namespace Persistence
             services.AddTransient<IRepository<CategoriaVehiculo>, CategoriaVehiculoRepository>();
             services.AddTransient<IClienteRepository, ClienteRepository>();
             services.AddTransient<IRepository<Servicio>, ServicioRepository>();
-
-
             services.AddTransient<IRepository<Marca>, MarcaRepository>();
-
-
             services.AddTransient <IRepository<TipoDocumento>,TipoDocumentoRepository>();
             #endregion
 
