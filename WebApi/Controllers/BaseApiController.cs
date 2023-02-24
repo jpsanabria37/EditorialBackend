@@ -7,7 +7,7 @@ namespace WebApi.Controllers
 {
 
     [ApiController]
-    [Route("api/v{version:apiVersion}[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [EnableCors("CorsPolicy")]
     public abstract class BaseApiController : ControllerBase
     {

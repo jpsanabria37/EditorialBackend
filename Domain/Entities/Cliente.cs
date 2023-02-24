@@ -27,5 +27,8 @@ namespace Domain.Entities
         public int TipoDocumentoId  { get; set; }
         public TipoDocumento TipoDocumento { get; set; }
 
+        public int VehiculoId { get; set; }
+        public ICollection<Vehiculo> Vehiculos { get; set; }
+
     }
 }
