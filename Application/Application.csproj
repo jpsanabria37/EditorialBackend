@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Vehiculo\Queries\" />
     <Folder Include="Filters\" />
     <Folder Include="Mappings\" />
   </ItemGroup>
