@@ -8,6 +8,7 @@ namespace Application.Features.Clientes.Commands.CreateClientCommand
 {
     public class CreateClientCommand : IRequest<Response<int>>
     {
+        public int TipoDocumentoId { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public DateTime FechaNacimiento { get; set; }

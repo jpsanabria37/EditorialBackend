@@ -40,7 +40,7 @@ namespace WebApi.Controllers.v1
 
         //DELETE api/<controller>/id
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente([FromRoute] int id)
+        public async Task<IActionResult> DeleteMarca([FromRoute] int id)
         {
             var command = new DeleteMarcaCommand { Id = id };
             return Ok(await Mediator.Send(command));

@@ -5,6 +5,7 @@ using Application.Features.Clientes.Commands.CreateClientCommand;
 using Application.Features.Marca.Commands.CreateMarcaCommand;
 using Application.Features.Servicios.Commands.CreateServicioCommand;
 using Application.Features.TipoDocumentos.Commands.CreateTipoDocumentoCommand;
+using Application.Features.Vehiculo.Commands.CreateVehiculoCommand;
 using AutoMapper;
 using Domain.Entities;
 
@@ -23,6 +24,7 @@ namespace Application.Mappings
             CreateMap<CreateServicioCommand, Servicio>();
             CreateMap<CreateMarcaCommand, Marca>();
             CreateMap<CreateTipoDocumentoCommand, TipoDocumento>();
+            CreateMap<CreateVehiculoCommand, Vehiculo>();
             #endregion
             #region Cliente
             CreateMap<Cliente, ClienteDto>();
@@ -38,6 +40,9 @@ namespace Application.Mappings
             #endregion
             #region Servicio
             CreateMap<Servicio, ServicioDto>();
+            #endregion
+            #region Vehiculo
+            CreateMap<Vehiculo, VehiculoDto>();
             #endregion
 
 
