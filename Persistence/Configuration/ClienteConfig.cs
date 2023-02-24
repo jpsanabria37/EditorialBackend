@@ -47,6 +47,9 @@ namespace Persistence.Configuration
             builder.Property(c => c.CreatedBy)
                 .HasMaxLength(30);
 
+            builder.Property(c => c.NumeroDocumento)
+              .HasMaxLength(40);
+
             builder.Property(c => c.LastModifiedBy)
                .HasMaxLength(30);
           
@@ -60,7 +63,10 @@ namespace Persistence.Configuration
             builder.HasOne(p => p.TipoDocumento) // la propiedad de navegación que hace referencia a la entidad Categoria
                 .WithMany(c => c.Clientes) // la propiedad de navegación de la entidad Categoria que representa la relación inversa
                 .HasForeignKey(p => p.TipoDocumentoId) // la clave foránea que representa la relación
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+
 
             builder.HasQueryFilter(c => !c.IsDeleted);
 

@@ -140,15 +140,17 @@ namespace WebApi.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("varchar(80)");
 
+                    b.Property<string>("NumeroDocumento")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
 
                     b.Property<int>("TipoDocumentoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehiculoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -312,13 +314,68 @@ namespace WebApi.Migrations
                     b.ToTable("tipo_documentos", (string)null);
                 });
 
-                    modelBuilder.Entity("Domain.Entities.Cliente", b =>
-                        {
-                            b.HasOne("Domain.Entities.TipoDocumento", "TipoDocumento")
-                                .WithMany("Clientes")
-                                .HasForeignKey("TipoDocumentoId")
-                                .OnDelete(DeleteBehavior.Restrict)
-                                .IsRequired();
+            modelBuilder.Entity("Domain.Entities.Vehiculo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("AnioModelo")
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Kilometraje")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("MarcaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Placa")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("MarcaId");
+
+                    b.ToTable("vehiculos", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Cliente", b =>
+                {
+                    b.HasOne("Domain.Entities.TipoDocumento", "TipoDocumento")
+                        .WithMany("Clientes")
+                        .HasForeignKey("TipoDocumentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("TipoDocumento");
                 });
@@ -345,15 +402,44 @@ namespace WebApi.Migrations
                     b.Navigation("Categoria");
                 });
 
-                    modelBuilder.Entity("Domain.Entities.Categoria", b =>
-                        {
-                            b.Navigation("Productos");
-                        });
+            modelBuilder.Entity("Domain.Entities.Vehiculo", b =>
+                {
+                    b.HasOne("Domain.Entities.Cliente", "Cliente")
+                        .WithMany("Vehiculos")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
+                    b.HasOne("Domain.Entities.Marca", "Marca")
+                        .WithMany("Vehiculos")
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    modelBuilder.Entity("Domain.Entities.CategoriaVehiculo", b =>
-                        {
-                            b.Navigation("Marcas");
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Marca");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Categoria", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CategoriaVehiculo", b =>
+                {
+                    b.Navigation("Marcas");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Cliente", b =>
+                {
+                    b.Navigation("Vehiculos");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Marca", b =>
+                {
+                    b.Navigation("Vehiculos");
+                });
 
             modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
                 {

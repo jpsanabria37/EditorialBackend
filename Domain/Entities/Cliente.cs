@@ -22,12 +22,13 @@ namespace Domain.Entities
 
         public int Edad { get; set; }
 
-        public string? Imagen { get; set; } = "/images/user_default.png";
+        public string Imagen { get; set; } 
+
+        public string NumeroDocumento { get; set; }
 
         public int TipoDocumentoId  { get; set; }
         public TipoDocumento TipoDocumento { get; set; }
 
-        public int VehiculoId { get; set; }
         public ICollection<Vehiculo> Vehiculos { get; set; }
 
     }

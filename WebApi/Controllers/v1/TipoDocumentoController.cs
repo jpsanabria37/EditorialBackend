@@ -1,16 +1,12 @@
-﻿using Application.Features.Clientes.Commands.CreateClientCommand;
-using Application.Features.Clientes.Commands.DeleteClientCommand;
-using Application.Features.Clientes.Commands.UpdateClientCommand;
-using Application.Features.Clientes.Queries.GetByIdClient;
-using Application.Features.TipoDocumentos.Commands.CreateTipoDocumentoCommand;
+﻿using Application.Features.TipoDocumentos.Commands.CreateTipoDocumentoCommand;
 using Application.Features.TipoDocumentos.Commands.DeleteTipoDocumentoCommand;
 using Application.Features.TipoDocumentos.Commands.UpdateTipoDocumentoCommand;
 using Application.Features.TipoDocumentos.Queries.GetAllTipoDocumentoCommand;
 using Application.Features.TipoDocumentos.Queries.GetByIdTipoDocumentoQuery;
 using Domain.Entities;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+
 
 namespace WebApi.Controllers.v1
 {

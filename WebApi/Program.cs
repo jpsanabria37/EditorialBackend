@@ -48,8 +48,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthorization();
-app.UseCors("CorsPolicy");
 app.UseErrorHandlerMiddleware();
 app.MapControllers();
 
