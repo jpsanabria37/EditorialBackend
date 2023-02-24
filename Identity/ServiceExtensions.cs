@@ -20,10 +20,10 @@ namespace Identity
     {
         public static void AddIdentityInfraestructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<IdentityContext>(options =>
-            {
-                options.UseMySQL(configuration.GetConnectionString("IdentityConnection"), b => b.MigrationsAssembly("WebApi"));
-            });
+            var connection = configuration.GetConnectionString("DATABASE_URL");
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
+
+            services.AddDbContext<IdentityContext>(opts => opts.UseMySql(connection, serverVersion, b => b.MigrationsAssembly("WebApi")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 // Configurar opciones de Identity aquí

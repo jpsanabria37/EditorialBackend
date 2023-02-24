@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repository;
+using CloudSql;
 
 namespace Persistence
 {
@@ -12,11 +13,20 @@ namespace Persistence
     {
         public static IServiceCollection AddPersistenceInfraestructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseMySQL(
-                    configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly("WebApi"))
-                );
+
+           /* var connectionString = MySqlTcp.NewMysqlTCPConnectionString().ConnectionString;
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+                    .EnableSensitiveDataLogging()
+                    .EnableDetailedErrors()
+                    );
+           */
+            var connection = configuration.GetConnectionString("DATABASE_URL");
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
+
+            services.AddDbContext<ApplicationDbContext>(opts => opts.UseMySql(connection, serverVersion, b => b.MigrationsAssembly("WebApi")));
+
 
             #region Repositories
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(MyRepositoryAsync<>));
