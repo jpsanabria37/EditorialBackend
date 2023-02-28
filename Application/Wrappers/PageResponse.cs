@@ -17,7 +17,7 @@ namespace Application.Wrappers
         public PageResponse(T data, int pageNumber, int pageSize)
         {
             this.Data = data;
-            this.Errors = null;
+            this.errors = null;
             this.Succeeded = true;
             this.Message= string.Empty;
             PageNumber = pageNumber;

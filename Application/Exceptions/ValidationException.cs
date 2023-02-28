@@ -6,18 +6,22 @@ namespace Application.Exceptions
     {
         public ValidationException() : base("Se han producido uno o mas errores de validación")
         {
-            Errors = new List<string>();
+            errors = new Dictionary<string, string[]>();
         }
 
-        public List<string> Errors { get;}
+        public Dictionary<string, string[]> errors { get; }
 
         public ValidationException(IEnumerable<ValidationFailure> failures) : this()
         {
-            foreach (var failure in failures)
+            var propertyNames = failures.Select(e => e.PropertyName).Distinct();
+            foreach (var propertyName in propertyNames)
             {
-                Errors.Add(failure.ErrorMessage);
+                var errorMessages = failures
+                    .Where(e => e.PropertyName == propertyName)
+                    .Select(e => e.ErrorMessage)
+                    .ToArray();
+                errors.Add(propertyName, errorMessages);
             }
         }
-
     }
 }

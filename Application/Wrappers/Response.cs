@@ -2,10 +2,25 @@
 {
     public class Response<T>
     {
+
+        public bool Succeeded { get; set; }
+        public string Message { get; set; }
+
+        public Dictionary<string, string[]> errors { get; set; }
+
+        public T Data { get; set; }
+
+
         public Response()
         {
-
+            Succeeded= false;
         }
+        public Response(string message)
+        {
+            Succeeded = false;
+            Message = message;
+        }
+
 
         public Response(T data, string message = null)
         {
@@ -14,17 +29,7 @@
             Data= data;
         }
 
-        public Response(string message)
-        {
-            Succeeded = false;
-            Message = message;
-        }
-
-        public bool Succeeded { get; set; }
-        public string Message { get; set; }
-
-        public List<string> Errors { get; set; }
-
-        public T Data { get; set; }
+      
+       
     }
 }

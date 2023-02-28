@@ -20,40 +20,33 @@ namespace WebApi.Middlewares
             {
                 await _next(context);
             }
-            catch (Exception err)
+            catch (Exception ex)
             {
-                var response = context.Response;
-                response.ContentType = "application/json";
-                var responseModel = new Response<string>()
-                {
-                    Succeeded = false,
-                    Message = err?.Message
-                };
+                var response = new Response<object>();
 
-                switch (err)
+                switch (ex)
                 {
-                    case ApiException e:
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
-
                     case ValidationException e:
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        responseModel.Errors = e.Errors;
+                        context.Response.StatusCode = (int)HttpStatusCode.NotAcceptable;
+                        response.Succeeded = false;
+                        response.errors = e.errors;
+                        response.Message = "One or more validation errors occurred.";
                         break;
-
                     case KeyNotFoundException e:
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        response.Succeeded = false;
+                        response.Message = e.Message;
                         break;
-
                     default:
-                        //unhandled error
-                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        response.Succeeded = false;
+                        response.Message = "Internal Server Error";
                         break;
                 }
 
-                var result = JsonSerializer.Serialize(responseModel);
-
-                await response.WriteAsync(result);
+                context.Response.ContentType = "application/json";
+                var result = JsonSerializer.Serialize(response);
+                await context.Response.WriteAsync(result);
             }
         }
     }
