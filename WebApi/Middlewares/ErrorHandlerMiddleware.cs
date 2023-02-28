@@ -27,7 +27,7 @@ namespace WebApi.Middlewares
                 switch (ex)
                 {
                     case ValidationException e:
-                        context.Response.StatusCode = (int)HttpStatusCode.NotAcceptable;
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         response.Succeeded = false;
                         response.errors = e.errors;
                         response.Message = "One or more validation errors occurred.";

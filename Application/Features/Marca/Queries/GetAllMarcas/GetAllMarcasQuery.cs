@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Marca.Queries.GetAllMarcas
 {
-    public class GetAllMarcasQuery : IRequest<Response<IEnumerable<Domain.Entities.Marca>>>
+    public class GetAllMarcasQuery : IRequest<Response<IEnumerable<MarcaDto>>>
     {
         
     }
 
-    public class GetAllMarcasQueryHandler : IRequestHandler<GetAllMarcasQuery, Response<IEnumerable<Domain.Entities.Marca>>>
+    public class GetAllMarcasQueryHandler : IRequestHandler<GetAllMarcasQuery, Response<IEnumerable<MarcaDto>>>
     {
         private readonly IRepository<Domain.Entities.Marca> _repository;
         private readonly IDistributedCache _distributedCache;
@@ -31,7 +31,7 @@ namespace Application.Features.Marca.Queries.GetAllMarcas
             _distributedCache = distributedCache;
             _mapper = mapper;
         }
-        public async Task<Response<IEnumerable<Domain.Entities.Marca>>> Handle(GetAllMarcasQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<MarcaDto>>> Handle(GetAllMarcasQuery request, CancellationToken cancellationToken)
         {
             var cacheKey = $"listadoMarcas";
             string serializedListadoMarcas;
@@ -58,7 +58,7 @@ namespace Application.Features.Marca.Queries.GetAllMarcas
             }
 
             var dtos = _mapper.Map<IEnumerable<MarcaDto>>(listadoMarcas);
-            return new Response<IEnumerable<Domain.Entities.Marca>>(listadoMarcas);
+            return new Response<IEnumerable<MarcaDto>>(dtos);
         }
     }
 }

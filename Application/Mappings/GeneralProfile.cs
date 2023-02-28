@@ -33,11 +33,10 @@ namespace Application.Mappings
             CreateMap<TipoDocumento, TipoDocumentoDto>();
             #endregion
             #region CategoriaVehiculo
-            CreateMap<CategoriaVehiculo, CategoriaVehiculoDto>();            
+            CreateMap<CategoriaVehiculo, CategoriaVehiculoDto>();
             #endregion
             #region Marca
-            /*CreateMap<Marca, MarcaDto>()
-                .ForMember(dest => dest.CategoriaVehiculoNombre, opt => opt.MapFrom(src => src.CategoriaVehiculo.Nombre));*/
+            CreateMap<Marca, MarcaDto>();
             #endregion
             #region Servicio
             CreateMap<Servicio, ServicioDto>();

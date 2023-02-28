@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs;
+using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
@@ -32,7 +33,8 @@ namespace Persistence.Repository
 
         public async Task<IEnumerable<Marca>> GetAllAsync()
         {
-            return await _context.Set<Marca>().Include("CategoriaVehiculo").ToListAsync();
+            return await _context.Set<Marca>().Include(m => m.CategoriaVehiculo).ToListAsync();
+
         }
 
         public async Task<Marca> GetByIdAsync(int id)

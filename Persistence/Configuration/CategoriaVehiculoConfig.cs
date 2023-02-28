@@ -28,6 +28,7 @@ namespace Persistence.Configuration
                .HasMaxLength(120);
 
             builder.HasQueryFilter(c => !c.IsDeleted);
+
         }
     }
 }

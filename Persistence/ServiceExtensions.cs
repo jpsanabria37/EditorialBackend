@@ -22,7 +22,7 @@ namespace Persistence
                     .EnableDetailedErrors()
                     );
            */
-            var connection = configuration.GetConnectionString("DATABASE_URL");
+            var connection = configuration.GetConnectionString("localhost");
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
 
             services.AddDbContext<ApplicationDbContext>(opts => opts.UseMySql(connection, serverVersion, b => b.MigrationsAssembly("WebApi")));
