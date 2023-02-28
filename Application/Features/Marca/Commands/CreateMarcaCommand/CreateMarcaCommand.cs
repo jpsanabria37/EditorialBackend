@@ -17,7 +17,6 @@ namespace Application.Features.Marca.Commands.CreateMarcaCommand
         public string Nombre { get; set; }
         public int CategoriaVehiculoId { get; set; }
 
-
     }
     public class CreateMarcaCommandHandler : IRequestHandler<CreateMarcaCommand, Response<int>>
     {

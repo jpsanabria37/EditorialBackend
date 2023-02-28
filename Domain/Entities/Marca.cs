@@ -12,7 +12,6 @@ namespace Domain.Entities
         public string Nombre { get; set; }
         public int CategoriaVehiculoId { get; set; }
         public CategoriaVehiculo CategoriaVehiculo { get; set; }
-        public int VehiculoId { get; set; }
         public ICollection<Vehiculo> Vehiculos { get; set;}
     }
 }

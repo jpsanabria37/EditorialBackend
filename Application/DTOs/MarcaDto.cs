@@ -10,5 +10,7 @@ namespace Application.DTOs
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
+
+        public string CategoriaVehiculoNombre { get; set; }
     }
 }

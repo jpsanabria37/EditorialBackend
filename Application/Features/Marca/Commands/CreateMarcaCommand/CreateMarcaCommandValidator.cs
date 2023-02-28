@@ -13,7 +13,8 @@ namespace Application.Features.Marca.Commands.CreateMarcaCommand
         {
             RuleFor(c => c.Nombre)
                 .NotEmpty().WithMessage("{PropertyName} no puede quedar vacio.")
-                .MaximumLength(120).WithMessage("{PropertyName} no debe exceder de {MaxLength} carácteres.");
+                .MaximumLength(120).WithMessage("{PropertyName} no debe exceder de {MaxLength} carácteres.")
+                .MinimumLength(3).WithMessage("El nombre debe tener al menos 5 caracteres.");
         }
     }
 }

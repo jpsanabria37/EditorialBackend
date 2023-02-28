@@ -40,6 +40,12 @@ namespace Persistence.Configuration
                .IsRequired()
                .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(p => p.Marca) // la propiedad de navegación que hace referencia a la entidad Categoria
+              .WithMany(c => c.Vehiculos) // la propiedad de navegación de la entidad Categoria que representa la relación inversa
+              .HasForeignKey(p => p.MarcaId) // la clave foránea que representa la relación
+              .IsRequired()
+              .OnDelete(DeleteBehavior.Restrict);
+
 
             builder.HasQueryFilter(c => !c.IsDeleted);
         }

@@ -36,7 +36,8 @@ namespace Application.Mappings
             CreateMap<CategoriaVehiculo, CategoriaVehiculoDto>();            
             #endregion
             #region Marca
-            CreateMap<Marca, MarcaDto>();            
+            /*CreateMap<Marca, MarcaDto>()
+                .ForMember(dest => dest.CategoriaVehiculoNombre, opt => opt.MapFrom(src => src.CategoriaVehiculo.Nombre));*/
             #endregion
             #region Servicio
             CreateMap<Servicio, ServicioDto>();
