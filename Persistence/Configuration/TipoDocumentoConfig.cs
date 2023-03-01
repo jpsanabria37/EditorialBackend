@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,8 +28,12 @@ namespace Persistence.Configuration
                 .IsRequired()
                 .HasMaxLength(80);
 
-            builder.HasQueryFilter(c => !c.IsDeleted);
+            builder.Property(c => c.IsDeleted)
+           .HasDefaultValue(false);
 
+            builder.HasQueryFilter(c => !c.IsDeleted);
+            
+           
 
         }
     }

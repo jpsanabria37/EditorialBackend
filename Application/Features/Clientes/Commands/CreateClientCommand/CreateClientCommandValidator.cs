@@ -41,10 +41,15 @@ namespace Application.Features.Clientes.Commands.CreateClientCommand
             .MustAsync(async (email, cancellation) => !await _clienteRepository.ExisteEmail(email)).WithMessage("El correo electrónico ya está registrado en el sistema.")
             .Matches(dominiosPermitidos).WithMessage("El correo electrónico debe tener un dominio válido (gmail, outlook, yahoo, hotmail) y terminar en .com");
 
+            RuleFor(c => c.TipoDocumentoId).NotEmpty().WithMessage("El tipo de documento es requerido.");
+            RuleFor(c => c.NumeroDocumento).NotEmpty().WithMessage("El número de documento es requerido.")
+                .Matches("^[0-9]+$").WithMessage("El número de documento solo puede contener dígitos.");
 
+            RuleFor(c => c)
+             .MustAsync(async (cliente, cancellationToken) => await _clienteRepository.NoExisteClienteConMismoTipoYNumeroDocumento(cliente.TipoDocumentoId, cliente.NumeroDocumento))
+             .WithMessage("Ya existe un cliente con el mismo tipo y número de documento.")
+                .OverridePropertyName("NumeroDocumento");
         }
-
-
 
     }
 }

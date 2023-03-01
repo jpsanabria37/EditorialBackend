@@ -1,4 +1,4 @@
-﻿using Application.DTOs.TipoDocumentos;
+﻿using Application.DTOs;
 using Application.Features.TipoDocumentos.Commands.UpdateTipoDocumentoCommand;
 using Application.Interfaces;
 using Application.Wrappers;

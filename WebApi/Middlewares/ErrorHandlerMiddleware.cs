@@ -41,6 +41,7 @@ namespace WebApi.Middlewares
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         response.Succeeded = false;
                         response.Message = "Internal Server Error";
+                        response.Data = ex.Message; // agregar el mensaje de error al objeto de respuesta
                         break;
                 }
 

@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Contexts;
 using Persistence.Repository;
-using CloudSql;
 
 namespace Persistence
 {
@@ -13,15 +12,6 @@ namespace Persistence
     {
         public static IServiceCollection AddPersistenceInfraestructure(this IServiceCollection services, IConfiguration configuration)
         {
-
-           /* var connectionString = MySqlTcp.NewMysqlTCPConnectionString().ConnectionString;
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors()
-                    );
-           */
             var connection = configuration.GetConnectionString("localhost");
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
 
@@ -47,7 +37,6 @@ namespace Persistence
             });
             #endregion
 
-            //services.AddTransient<ClienteEmailUnicoValidator>();
 
             return services;
 

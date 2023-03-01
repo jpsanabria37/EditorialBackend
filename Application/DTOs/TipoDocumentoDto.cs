@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOs.TipoDocumentos
+namespace Application.DTOs
 {
     public class TipoDocumentoDto
     {
         public int Id { get; set; }
-
         public string Tipo { get; set; }
-
-
         public string Descripcion { get; set; }
     }
 }

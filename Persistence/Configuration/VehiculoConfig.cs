@@ -47,6 +47,9 @@ namespace Persistence.Configuration
               .OnDelete(DeleteBehavior.Restrict);
 
 
+            builder.Property(c => c.IsDeleted)
+           .HasDefaultValue(false);
+
             builder.HasQueryFilter(c => !c.IsDeleted);
         }
     }

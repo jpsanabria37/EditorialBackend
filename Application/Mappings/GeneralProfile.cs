@@ -1,5 +1,4 @@
 ﻿using Application.DTOs;
-using Application.DTOs.TipoDocumentos;
 using Application.Features.CategoriaVehiculo.Commands.CreateCategoriaVehiculoCommand;
 using Application.Features.Clientes.Commands.CreateClientCommand;
 using Application.Features.Marca.Commands.CreateMarcaCommand;

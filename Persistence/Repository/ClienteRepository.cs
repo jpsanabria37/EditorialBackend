@@ -31,9 +31,18 @@ namespace Persistence.Repository
             return await _context.Set<Cliente>().AnyAsync(x => x.Email == email);
         }
 
+        public async Task<bool> NoExisteClienteConMismoTipoYNumeroDocumento(int tipoDocumentoId, string numeroDocumento)
+        {
+            // Verificar si existe algún cliente con los mismos valores de tipo y número de documento
+            return await _context.Set<Cliente>().AllAsync(c => c.TipoDocumentoId != tipoDocumentoId || c.NumeroDocumento != numeroDocumento);
+
+        }
+
+
+
         public async Task<IEnumerable<Cliente>> GetAllAsync()
         {
-            return await _context.Set<Cliente>().ToListAsync();
+            return await _context.Set<Cliente>().Include(x => x.TipoDocumento).ToListAsync();
         }
 
         public async Task<Cliente> GetByIdAsync(int id)

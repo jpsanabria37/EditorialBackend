@@ -22,7 +22,10 @@ namespace Persistence.Configuration
                .IsRequired()
                .HasMaxLength(120);
 
+            builder.Property(c => c.IsDeleted)
+           .HasDefaultValue(false);
             builder.HasQueryFilter(c => !c.IsDeleted);
+
         }
     }
 }

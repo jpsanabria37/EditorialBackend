@@ -9,5 +9,7 @@ namespace Application.Interfaces
     public interface IClienteRepository
     {
         Task<bool> ExisteEmail(string email);
+
+        Task<bool> NoExisteClienteConMismoTipoYNumeroDocumento(int tipoDocumentoId, string numeroDocumento);
     }
 }

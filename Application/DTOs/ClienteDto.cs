@@ -15,6 +15,10 @@ namespace Application.DTOs
         public string Telefono { get; set; }
         public string Email { get; set; }
         public string Direccion { get; set; }
+
+        public string NumeroDocumento { get; set; }
         public int Edad { get; set; }
+
+        public TipoDocumentoDto TipoDocumento { get; set; }
     }
 }

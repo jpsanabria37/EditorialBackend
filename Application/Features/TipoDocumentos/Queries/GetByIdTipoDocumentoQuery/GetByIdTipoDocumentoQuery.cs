@@ -1,5 +1,4 @@
 ﻿using Application.DTOs;
-using Application.DTOs.TipoDocumentos;
 using Application.Features.Clientes.Queries.GetByIdClient;
 using Application.Interfaces;
 using Application.Wrappers;

@@ -66,7 +66,8 @@ namespace Persistence.Configuration
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-
+            builder.Property(c => c.IsDeleted)
+           .HasDefaultValue(false);
 
             builder.HasQueryFilter(c => !c.IsDeleted);
 

@@ -18,12 +18,17 @@ namespace Persistence.Configuration
             builder.HasKey(c => c.Id);
             builder.Property(p => p.Id).ValueGeneratedOnAdd();        
                       
-            builder.HasQueryFilter(c => !c.IsDeleted);
+           
 
             builder.HasOne(p => p.CategoriaVehiculo) // la propiedad de navegación que hace referencia a la entidad Categoria
                 .WithMany(c => c.Marcas) // la propiedad de navegación de la entidad Categoria que representa la relación inversa
                 .HasForeignKey(p => p.CategoriaVehiculoId) // la clave foránea que representa la relación
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Property(c => c.IsDeleted)
+           .HasDefaultValue(false);
+
+            builder.HasQueryFilter(c => !c.IsDeleted);
         }
     }
 }

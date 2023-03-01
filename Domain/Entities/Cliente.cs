@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
+    [DataContract(IsReference = true)]
     public class Cliente : AuditableBaseEntity
     {
 

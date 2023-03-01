@@ -28,12 +28,17 @@ namespace Persistence.Configuration
                 .HasColumnType("decimal(9,2)")
                 .HasDefaultValue(0.0);
 
-            builder.HasQueryFilter(c => !c.IsDeleted);
+       
 
             builder.HasOne(p => p.Categoria) // la propiedad de navegación que hace referencia a la entidad Categoria
                 .WithMany(c => c.Productos) // la propiedad de navegación de la entidad Categoria que representa la relación inversa
                 .HasForeignKey(p => p.CategoriaId) // la clave foránea que representa la relación
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Property(c => c.IsDeleted)
+           .HasDefaultValue(false);
+
+            builder.HasQueryFilter(c => !c.IsDeleted);
         }
     }
 }

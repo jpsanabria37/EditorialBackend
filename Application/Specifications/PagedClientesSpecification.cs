@@ -1,11 +1,7 @@
 ﻿using Application.Features.Clientes.Queries.GetAllClient;
 using Ardalis.Specification;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Specifications
 {
@@ -13,6 +9,7 @@ namespace Application.Specifications
     {
         public PagedClientesSpecification(GetAllClientsQuery filter)
         {
+            Query.Include(x => x.TipoDocumento);
             Query.Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
 
@@ -21,6 +18,8 @@ namespace Application.Specifications
 
             if (!string.IsNullOrEmpty(filter.Apellido))
                 Query.Search(x => x.Apellido, $"%{filter.Apellido}%");
+
+            
         }
     }
 }
