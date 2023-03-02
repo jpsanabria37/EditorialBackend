@@ -1,23 +1,27 @@
-﻿using Application.DTOs;
-using Application.Features.Clientes.Commands.CreateClientCommand;
+﻿using Application.Features.Clientes.Commands.CreateClientCommand;
 using Application.Features.Clientes.Commands.DeleteClientCommand;
 using Application.Features.Clientes.Commands.UpdateClientCommand;
 using Application.Features.Clientes.Queries.GetAllClient;
 using Application.Features.Clientes.Queries.GetByIdClient;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI;
 using Newtonsoft.Json;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Controllers.v1
 {
+    [Produces("application/json")]
     [ApiVersion("1.0")]
     public class ClienteController : BaseApiController
     {
+
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetAll([FromQuery] GetAllClientesQueryParameters filter)
         {
+           
+
             var clientes = await Mediator.Send(new GetAllClientsQuery
             {
                 PageNumber= filter.PageNumber,
@@ -26,17 +30,14 @@ namespace WebApi.Controllers.v1
                 Apellido= filter.Apellido,
             });
 
-            var json = JsonConvert.SerializeObject(clientes);
-
-            return Ok(json);
+            return Ok(clientes);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> ObtenerClientePorId(int id)
         {
             var cliente = await Mediator.Send(new GetClientByIdQuery { Id = id });
-            var json = JsonConvert.SerializeObject(cliente);
-            return Ok(json);
+            return Ok(cliente);
         }
 
         //POST api/<controller>

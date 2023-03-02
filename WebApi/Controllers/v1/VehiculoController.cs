@@ -16,6 +16,7 @@ using WebApi.Migrations;
 
 namespace WebApi.Controllers.v1
 {
+    [Produces("application/json")]
     [ApiVersion("1.0")]
     public class VehiculoController : BaseApiController
     {

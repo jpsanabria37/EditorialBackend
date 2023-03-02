@@ -31,6 +31,12 @@ namespace Application.Features.CategoriaVehiculo.Queries.GetAllCategoriaVehiculo
 
         public async Task<Response<IEnumerable<CategoriaVehiculoDto>>> Handle(GetAllCategoriaVehiculoQuery request, CancellationToken cancellationToken)
         {
+
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
             var cacheKey = $"listadoCategoriaVehiculos";
             string serializedListadoCVehiculos;
             var listadoCVehiculos = new List<Domain.Entities.CategoriaVehiculo>();
@@ -45,7 +51,7 @@ namespace Application.Features.CategoriaVehiculo.Queries.GetAllCategoriaVehiculo
             {
                 var cVehiculos = await _repositoryAsync.GetAllAsync();
                 listadoCVehiculos = cVehiculos.ToList();
-                serializedListadoCVehiculos = JsonConvert.SerializeObject(listadoCVehiculos);
+                serializedListadoCVehiculos = JsonConvert.SerializeObject(listadoCVehiculos, settings);
                 redisListadoCVehiculos = Encoding.UTF8.GetBytes(serializedListadoCVehiculos);
 
                 var options = new DistributedCacheEntryOptions()

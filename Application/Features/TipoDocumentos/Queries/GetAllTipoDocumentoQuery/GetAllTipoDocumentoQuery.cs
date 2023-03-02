@@ -36,8 +36,13 @@ namespace Application.Features.TipoDocumentos.Queries.GetAllTipoDocumentoCommand
         }
 
         public async Task<Response<IEnumerable<TipoDocumentoDto>>> Handle(GetAllTipoDocumentoQuery request, CancellationToken cancellationToken)
-        { 
-                var cacheKey = $"listadoTipoDocumentos";
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
+            var cacheKey = $"listadoTipoDocumentos";
                 string serializedListadoTipoDocumentos;
                 var listadoTipoDocumentos = new List<TipoDocumento>();
                 var redisListadoTipoDocumentos = await _distributedCache.GetAsync(cacheKey);
@@ -51,7 +56,7 @@ namespace Application.Features.TipoDocumentos.Queries.GetAllTipoDocumentoCommand
                 {
                     var tipo = await _repository.GetAllAsync();
                     listadoTipoDocumentos = tipo.ToList();
-                    serializedListadoTipoDocumentos = JsonConvert.SerializeObject(listadoTipoDocumentos);
+                    serializedListadoTipoDocumentos = JsonConvert.SerializeObject(listadoTipoDocumentos, settings);
                     redisListadoTipoDocumentos = Encoding.UTF8.GetBytes(serializedListadoTipoDocumentos);
 
                     var options = new DistributedCacheEntryOptions()

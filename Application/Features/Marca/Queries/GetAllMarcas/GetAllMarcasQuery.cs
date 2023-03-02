@@ -33,6 +33,12 @@ namespace Application.Features.Marca.Queries.GetAllMarcas
         }
         public async Task<Response<IEnumerable<MarcaDto>>> Handle(GetAllMarcasQuery request, CancellationToken cancellationToken)
         {
+
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
             var cacheKey = $"listadoMarcas";
             string serializedListadoMarcas;
             var listadoMarcas = new List<Domain.Entities.Marca>();
@@ -47,7 +53,7 @@ namespace Application.Features.Marca.Queries.GetAllMarcas
             {
                 var marcas = await _repository.GetAllAsync();
                 listadoMarcas = marcas.ToList();
-                serializedListadoMarcas = JsonConvert.SerializeObject(listadoMarcas);
+                serializedListadoMarcas = JsonConvert.SerializeObject(listadoMarcas, settings);
                 redisListadoMarcas = Encoding.UTF8.GetBytes(serializedListadoMarcas);
 
                 var options = new DistributedCacheEntryOptions()

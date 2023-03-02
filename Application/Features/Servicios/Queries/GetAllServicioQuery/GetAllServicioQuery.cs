@@ -31,6 +31,12 @@ namespace Application.Features.Servicios.Queries.GetAllServicioQuery
         }
         public async Task<Response<IEnumerable<ServicioDto>>> Handle(GetAllServicioQuery request, CancellationToken cancellationToken)
         {
+
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
             var cacheKey = $"listadoServicios";
             string serializedListadoServicios;
             var listadoServicios = new List<Servicio>();
@@ -45,7 +51,7 @@ namespace Application.Features.Servicios.Queries.GetAllServicioQuery
             {
                 var cVehiculos = await _repositoryAsync.GetAllAsync();
                 listadoServicios = cVehiculos.ToList();
-                serializedListadoServicios = JsonConvert.SerializeObject(listadoServicios);
+                serializedListadoServicios = JsonConvert.SerializeObject(listadoServicios, settings);
                 redisListadoServicios = Encoding.UTF8.GetBytes(serializedListadoServicios);
 
                 var options = new DistributedCacheEntryOptions()

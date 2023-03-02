@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 
 namespace WebApi.Controllers.v1
 {
+    [Produces("application/json")]
     [ApiVersion("1.0")]
     public class ProductoController : BaseApiController
     {

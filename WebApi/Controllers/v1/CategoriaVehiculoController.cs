@@ -1,16 +1,13 @@
 ﻿using Application.Features.CategoriaVehiculo.Commands.CreateCategoriaVehiculoCommand;
 using Application.Features.CategoriaVehiculo.Queries.GetAllCategoriaVehiculoQuery;
 using Application.Features.CategoriaVehiculo.Queries.GetByIdCategoriaVehiculoQuery;
-using Application.Features.Clientes.Commands.CreateClientCommand;
-using Application.Features.Clientes.Queries.GetAllClient;
-using Application.Features.Clientes.Queries.GetByIdClient;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace WebApi.Controllers.v1
 {
+    [Produces("application/json")]
     [ApiVersion("1.0")]
     public class CategoriaVehiculoController : BaseApiController
     {
@@ -26,18 +23,14 @@ namespace WebApi.Controllers.v1
         public async Task<ActionResult<IEnumerable<CategoriaVehiculo>>> GetAll()
         {
             var cVehiculos = await Mediator.Send(new GetAllCategoriaVehiculoQuery());
-
-            var json = JsonConvert.SerializeObject(cVehiculos);
-
-            return Ok(json);
+            return Ok(cVehiculos);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoriaVehiculo>> ObtenerClientePorId(int id)
+        public async Task<ActionResult<CategoriaVehiculo>> ObtenerCategoriaVehiculoPorId(int id)
         {
             var cVehiculo = await Mediator.Send(new GetByIdCategoriaVehiculoQuery { Id = id });
-            var json = JsonConvert.SerializeObject(cVehiculo);
-            return Ok(json);
+            return Ok(cVehiculo);
         }
     }
 }

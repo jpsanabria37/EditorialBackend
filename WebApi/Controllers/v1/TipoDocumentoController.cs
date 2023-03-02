@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace WebApi.Controllers.v1
 {
+    [Produces("application/json")]
     [ApiVersion("1.0")]
     public class TipoDocumentoController  : BaseApiController
     {
@@ -33,10 +34,7 @@ namespace WebApi.Controllers.v1
         public async Task<ActionResult<IEnumerable<TipoDocumento>>> GetAll()
         {
             var ctypes = await Mediator.Send(new GetAllTipoDocumentoQuery());
-
-            var json = JsonConvert.SerializeObject(ctypes);
-
-            return Ok(json);
+            return Ok(ctypes);
         }
         //Put api/<controller>
         [HttpPut("{id}")]

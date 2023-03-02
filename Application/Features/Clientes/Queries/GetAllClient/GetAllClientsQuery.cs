@@ -37,34 +37,46 @@ namespace Application.Features.Clientes.Queries.GetAllClient
 
         public async Task<PageResponse<IEnumerable<ClienteDto>>> Handle(GetAllClientsQuery request, CancellationToken cancellationToken)
         {
-            var cacheKey = $"listadoClientes_{request.PageNumber}_{request.PageSize}_{request.Apellido}_{request.Nombre}";
-            string serializedListadoClientes;
-            var listadoClientes = new List<Cliente>();
-            var redisListadoClientes = await _distributedCache.GetAsync(cacheKey);
-            
-            if(redisListadoClientes != null)
-            {
-                serializedListadoClientes = Encoding.UTF8.GetString(redisListadoClientes);
-                listadoClientes = JsonConvert.DeserializeObject<List<Cliente>>(serializedListadoClientes);
-            }
-            else
-            {
-                listadoClientes = await _repository.ListAsync(new PagedClientesSpecification(request));
-                serializedListadoClientes = JsonConvert.SerializeObject(listadoClientes);
-                redisListadoClientes = Encoding.UTF8.GetBytes(serializedListadoClientes);
 
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
+            string cacheKey = null;
+            byte[] redisListadoClientes = null;
+            List<Cliente> listadoClientes = null;
+            
+
+            if (!string.IsNullOrEmpty(request.Apellido) || !string.IsNullOrEmpty(request.Nombre))
+            {
+                cacheKey = $"listadoClientes_{request.PageNumber}_{request.PageSize}_{request.Apellido}_{request.Nombre}";
+                var redisListadoClientesCached = await _distributedCache.GetAsync(cacheKey);
+                if (redisListadoClientesCached != null)
+                {
+                    redisListadoClientes = redisListadoClientesCached;
+                    var serializedListadoClientesCache = Encoding.UTF8.GetString(redisListadoClientes);
+                    listadoClientes = JsonConvert.DeserializeObject<List<Cliente>>(serializedListadoClientesCache);
+                    var dtosCache = _mapper.Map<IEnumerable<ClienteDto>>(listadoClientes);
+                    return new PageResponse<IEnumerable<ClienteDto>>(dtosCache, request.PageNumber, request.PageSize);
+                }
+            }
+
+            listadoClientes = await _repository.ListAsync(new PagedClientesSpecification(request));
+            var serializedListadoClientes = JsonConvert.SerializeObject(listadoClientes, settings);
+            redisListadoClientes = Encoding.UTF8.GetBytes(serializedListadoClientes);
+
+            if (!string.IsNullOrEmpty(cacheKey))
+            {
                 var options = new DistributedCacheEntryOptions()
                     .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
                     .SetSlidingExpiration(TimeSpan.FromMinutes(2));
-
-                await _distributedCache.SetAsync(cacheKey, redisListadoClientes ,options);
+                await _distributedCache.SetAsync(cacheKey, redisListadoClientes, options);
             }
 
-
             var dtos = _mapper.Map<IEnumerable<ClienteDto>>(listadoClientes);
-
             return new PageResponse<IEnumerable<ClienteDto>>(dtos, request.PageNumber, request.PageSize);
-           
+
         }
     }
 }

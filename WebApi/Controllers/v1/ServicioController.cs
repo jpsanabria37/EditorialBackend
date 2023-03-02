@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 
 namespace WebApi.Controllers.v1
 {
+    [Produces("application/json")]
     [ApiVersion("1.0")]
     public class ServicioController : BaseApiController
     {
@@ -21,10 +22,7 @@ namespace WebApi.Controllers.v1
         public async Task<ActionResult<IEnumerable<Servicio>>> GetAll()
         {
             var servicios = await Mediator.Send(new GetAllServicioQuery());
-
-            var json = JsonConvert.SerializeObject(servicios);
-
-            return Ok(json);
+            return Ok(servicios);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Servicio>> ObtenerServicioPorId(int id)

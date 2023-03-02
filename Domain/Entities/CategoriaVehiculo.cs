@@ -1,9 +1,7 @@
 ﻿using Domain.Common;
-using System.Runtime.Serialization;
 
 namespace Domain.Entities
 {
-    [DataContract(IsReference = true)]
     public class CategoriaVehiculo : AuditableBaseEntity
     {
         public string Nombre { get; set; }

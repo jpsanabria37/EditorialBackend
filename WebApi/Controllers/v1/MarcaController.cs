@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 
 namespace WebApi.Controllers.v1
 {
+    [Produces("application/json")]
     [ApiVersion("1.0")]
     public class MarcaController : BaseApiController
     {
@@ -51,10 +52,7 @@ namespace WebApi.Controllers.v1
         public async Task<ActionResult<IEnumerable<MarcaDto>>> GetAll()
         {
             var marcas = await Mediator.Send(new GetAllMarcasQuery());
-
-            var json = JsonConvert.SerializeObject(marcas);
-
-            return Ok(json);
+            return Ok(marcas);
         }
 
         //GET api/<controller>/id
@@ -62,8 +60,7 @@ namespace WebApi.Controllers.v1
         public async Task<ActionResult<MarcaDto>> GetMarcaById(int id)
         {
             var marca = await Mediator.Send(new GetMarcaByIdQuery { Id = id });
-            var json = JsonConvert.SerializeObject(marca);
-            return Ok(json);
+            return Ok(marca);
         }
     }
 }
