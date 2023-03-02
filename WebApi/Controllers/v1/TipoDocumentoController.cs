@@ -25,9 +25,9 @@ namespace WebApi.Controllers.v1
         [HttpGet("{id}")]
         public async Task<ActionResult<TipoDocumento>> ObtenerTipoDocumentoById(int id)
         {
-            var cliente = await Mediator.Send(new GetByIdTipoDocumentoQuery { Id = id });
-            var json = JsonConvert.SerializeObject(cliente);
-            return Ok(json);
+            var tDoc = await Mediator.Send(new GetByIdTipoDocumentoQuery { Id = id });
+           
+            return Ok(tDoc);
         }
 
         [HttpGet]
