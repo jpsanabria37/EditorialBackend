@@ -47,7 +47,7 @@ namespace Persistence.Repository
 
         public async Task<Cliente> GetByIdAsync(int id)
         {
-            return await _context.Set<Cliente>().FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Set<Cliente>().Include(c => c.TipoDocumento).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task UpdateAsync(Cliente entity)

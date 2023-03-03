@@ -28,8 +28,7 @@ namespace WebApi.Controllers.v1
         public async Task<ActionResult<Servicio>> ObtenerServicioPorId(int id)
         {
             var servicio = await Mediator.Send(new GetServicioByIdQuery { Id = id });
-            var json = JsonConvert.SerializeObject(servicio);
-            return Ok(json);
+            return Ok(servicio);
         }
 
         //POST api/<controller>
