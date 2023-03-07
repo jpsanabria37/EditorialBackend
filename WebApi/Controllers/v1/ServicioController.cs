@@ -1,16 +1,10 @@
-﻿using Application.Features.Clientes.Commands.CreateClientCommand;
-using Application.Features.Clientes.Commands.DeleteClientCommand;
-using Application.Features.Clientes.Commands.UpdateClientCommand;
-using Application.Features.Clientes.Queries.GetAllClient;
-using Application.Features.Clientes.Queries.GetByIdClient;
-using Application.Features.Servicios.Commands.CreateServicioCommand;
+﻿using Application.Features.Servicios.Commands.CreateServicioCommand;
 using Application.Features.Servicios.Commands.DeleteServicioCommand;
 using Application.Features.Servicios.Commands.UpdateServicioCommand;
 using Application.Features.Servicios.Queries.GetAllServicioQuery;
 using Application.Features.Servicios.Queries.GetByIdServicio;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace WebApi.Controllers.v1
 {

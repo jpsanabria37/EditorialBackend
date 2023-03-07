@@ -1,19 +1,12 @@
-﻿using Application.Features.Marca.Commands.CreateMarcaCommand;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Application.Wrappers;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Vehiculo.Commands.CreateVehiculoCommand
 {
     public class CreateVehiculoCommand : IRequest<Response<int>>
     {
-        public int MarcaId { get; set; }
         public int ClienteId { get; set; }
         public string Placa { get; set; }
         public string Color { get; set; }

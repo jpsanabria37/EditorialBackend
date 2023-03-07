@@ -1,14 +1,8 @@
 ﻿using Application.DTOs;
-using Application.Features.Marca.Queries.GetByIdMarca;
 using Application.Interfaces;
 using Application.Wrappers;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Vehiculo.Queries.GetVehiculoByIdQuery
 {

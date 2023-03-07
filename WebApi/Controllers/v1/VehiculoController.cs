@@ -1,18 +1,11 @@
 ﻿using Application.DTOs;
-using Application.Features.Clientes.Commands.CreateClientCommand;
-using Application.Features.Clientes.Commands.DeleteClientCommand;
-using Application.Features.Clientes.Commands.UpdateClientCommand;
-using Application.Features.Marca.Queries.GetAllMarcas;
-using Application.Features.Marca.Queries.GetByIdMarca;
 using Application.Features.Vehiculo.Commands.CreateVehiculoCommand;
 using Application.Features.Vehiculo.Commands.DeleteVehiculoCommand;
 using Application.Features.Vehiculo.Commands.UpdateVehiculoCommand;
 using Application.Features.Vehiculo.Queries.GetAllVehiculos;
 using Application.Features.Vehiculo.Queries.GetVehiculoByIdQuery;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using WebApi.Migrations;
 
 namespace WebApi.Controllers.v1
 {

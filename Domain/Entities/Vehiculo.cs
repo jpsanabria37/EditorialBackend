@@ -8,9 +8,6 @@ namespace Domain.Entities
         public string Color { get; set; }
         public string Kilometraje { get; set; }
         public string AnioModelo { get; set; }
-
-        public int MarcaId { get; set; }
-        public Marca Marca { get; set; }
         public int ClienteId { get; set; }        
         public Cliente Cliente { get; set;}
 

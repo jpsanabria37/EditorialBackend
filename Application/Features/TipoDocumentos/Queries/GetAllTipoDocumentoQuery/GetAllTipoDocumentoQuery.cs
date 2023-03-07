@@ -1,5 +1,4 @@
 ﻿using Application.DTOs;
-using Application.Features.TipoDocumentos.Commands.UpdateTipoDocumentoCommand;
 using Application.Interfaces;
 using Application.Wrappers;
 using AutoMapper;
@@ -7,11 +6,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.TipoDocumentos.Queries.GetAllTipoDocumentoCommand
 {

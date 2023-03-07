@@ -16,6 +16,9 @@ namespace Application.Features.Servicios.Commands.CreateServicioCommand
     {
         public string Nombre { get; set; }
         public string Descripcion { get; set;}
+        public double Precio { get; set; }
+        public int CategoriaVehiculoId { get; set; }
+
     }
 
     public class CreateServicioCommandHandler : IRequestHandler<CreateServicioCommand, Response<int>>

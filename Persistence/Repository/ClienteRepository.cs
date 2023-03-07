@@ -55,5 +55,18 @@ namespace Persistence.Repository
             _context.Set<Cliente>().Update(entity);
             await SaveAsync();
         }
+
+
+        public async Task<Cliente> GetByNumeroDocumentoTipoDocumentoAsync(string numeroDocumento, int tipoDocumento)
+        {
+            return await _context.Set<Cliente>()
+                .FirstOrDefaultAsync(c => c.NumeroDocumento == numeroDocumento && c.TipoDocumentoId == tipoDocumento);
+        }
+
+
+        public async Task<Cliente> ObtenerPorEmail(string email)
+        {
+            return await _context.Clientes.FirstOrDefaultAsync(c => c.Email == email);
+        }
     }
 }

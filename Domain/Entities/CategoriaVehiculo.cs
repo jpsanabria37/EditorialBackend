@@ -8,6 +8,6 @@ namespace Domain.Entities
 
         public string Descripcion { get; set; }
 
-        public ICollection<Marca> Marcas { get; set; }
+        public IEnumerable<Servicio> Servicios { get; set; } = new List<Servicio>();
     }
 }

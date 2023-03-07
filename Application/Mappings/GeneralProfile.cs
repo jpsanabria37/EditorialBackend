@@ -1,9 +1,6 @@
 ﻿using Application.DTOs;
-using Application.Features.CategoriaVehiculo.Commands.CreateCategoriaVehiculoCommand;
 using Application.Features.Clientes.Commands.CreateClientCommand;
-using Application.Features.Marca.Commands.CreateMarcaCommand;
 using Application.Features.Servicios.Commands.CreateServicioCommand;
-using Application.Features.TipoDocumentos.Commands.CreateTipoDocumentoCommand;
 using Application.Features.Vehiculo.Commands.CreateVehiculoCommand;
 using AutoMapper;
 using Domain.Entities;
@@ -19,10 +16,7 @@ namespace Application.Mappings
             CreateMap<CreateClientCommand, Cliente>()
              .ForMember(dest => dest.Edad, opt => opt.MapFrom(src =>
                  new DateTime(DateTime.Now.Subtract(src.FechaNacimiento).Ticks).Year - 1));
-            CreateMap<CreateCategoriaVehiculoCommand, CategoriaVehiculo>();
             CreateMap<CreateServicioCommand, Servicio>();
-            CreateMap<CreateMarcaCommand, Marca>();
-            CreateMap<CreateTipoDocumentoCommand, TipoDocumento>();
             CreateMap<CreateVehiculoCommand, Vehiculo>();
             #endregion
             #region Cliente
@@ -34,9 +28,7 @@ namespace Application.Mappings
             #region CategoriaVehiculo
             CreateMap<CategoriaVehiculo, CategoriaVehiculoDto>();
             #endregion
-            #region Marca
-            CreateMap<Marca, MarcaDto>();
-            #endregion
+           
             #region Servicio
             CreateMap<Servicio, ServicioDto>();
             #endregion

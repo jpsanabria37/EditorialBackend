@@ -24,7 +24,7 @@ namespace Domain.Entities
         public int TipoDocumentoId  { get; set; }
         public TipoDocumento TipoDocumento { get; set; }
 
-        public ICollection<Vehiculo> Vehiculos { get; set; }
+        public IEnumerable<Vehiculo> Vehiculos { get; set; } = new List<Vehiculo>();
 
     }
 }
