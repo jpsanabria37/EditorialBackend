@@ -6,16 +6,9 @@ using Application.Wrappers;
 using Domain.Settings;
 using Identity.Helpers;
 using Identity.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Identity.Services
 {
     public class AccountService : IAccountService
@@ -25,28 +18,30 @@ namespace Identity.Services
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IDateTimeService dateTimeService;
         private readonly JWTSettings _jwtSettings;
-        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IDateTimeService dateTimeService, IOptions<JWTSettings> jwtSettings)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IDateTimeService dateTimeService, IOptions<JWTSettings> jwtSettings, IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
             this.dateTimeService = dateTimeService;
             _jwtSettings = jwtSettings.Value;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Response<AuthenticationResponse>> AuthenticateAsync(AuthenticationRequest request, string ipAddress)
         {
-            var user = await userManager.FindByNameAsync(request.UserName) ?? await userManager.FindByEmailAsync(request.Email);
+            var user = await userManager.FindByEmailAsync(request.Email);
             if (user == null)
             {
-                throw new ApiException("Nombre de usuario o correo electrónico incorrectos");
+                throw new ApiException("correo electrónico incorrecto");
             }
 
             // Verificar la contraseña
             var result = await signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
-                throw new ApiException("Nombre de usuario o contraseña incorrectos");
+                throw new ApiException("correo o contraseña incorrectos");
             }
 
             var roles = await userManager.GetRolesAsync(user).ConfigureAwait(false);
@@ -67,6 +62,17 @@ namespace Identity.Services
                 IsVerified = user.EmailConfirmed,
                 RefreshToken = refreshToken.Token
             };
+
+            // Aquí se establece el token JWT en la cabecera de la respuesta
+           
+            var httpContext = _httpContextAccessor.HttpContext;
+
+            // Verificar que el objeto HttpContext no sea nulo antes de acceder a su propiedad Response
+            if (httpContext != null)
+            {
+                httpContext.Response.Headers.Add("Authorization", "Bearer " + token);
+                // ...
+            }
 
             return new Response<AuthenticationResponse>(authenticationResponse, $"usuario autenticado {user.UserName}");
             

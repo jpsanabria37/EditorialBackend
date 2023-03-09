@@ -1,7 +1,6 @@
 ﻿using Application.DTOs.Users;
 using Application.Features.Authenticate.Commands.AuthenticateCommand;
 using Application.Features.Authenticate.Commands.RegisterCommand;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -17,11 +16,12 @@ namespace WebApi.Controllers
             return Ok(await Mediator.Send(new AuthenticateCommand
             {
                 Email= request.Email,
-                UserName= request.UserName,
                 Password= request.Password,
                 IpAddress= GenerateIPAddress()
             }));
         }
+
+
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)

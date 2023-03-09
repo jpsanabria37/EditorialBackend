@@ -12,7 +12,6 @@ namespace Application.Features.Authenticate.Commands.AuthenticateCommand
 {
     public class AuthenticateCommand : IRequest<Response<AuthenticationResponse>>
     {
-        public string? UserName { get; set; }
         public string? Email { get; set; }
 
         public string Password { get; set; }
@@ -33,7 +32,6 @@ namespace Application.Features.Authenticate.Commands.AuthenticateCommand
         {
             return await _accountService.AuthenticateAsync(new AuthenticationRequest
             {
-                UserName = request.UserName,
                 Email = request.Email,
                 Password = request.Password,
 
