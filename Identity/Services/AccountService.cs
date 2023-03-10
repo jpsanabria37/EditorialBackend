@@ -72,6 +72,14 @@ namespace Identity.Services
             {
                 httpContext.Response.Headers.Add("Authorization", "Bearer " + token);
                 // ...
+                httpContext.Response.Cookies.Append("jwt", token, new CookieOptions()
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Path = "/",
+                    Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes)
+                });
             }
 
             return new Response<AuthenticationResponse>(authenticationResponse, $"usuario autenticado {user.UserName}");

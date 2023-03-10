@@ -27,6 +27,7 @@ builder.Services.AddControllers().AddJsonOptions(options => {
 });
 
 
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -50,6 +51,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseRouting();
+app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthorization();
