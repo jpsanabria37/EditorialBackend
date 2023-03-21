@@ -41,10 +41,6 @@ namespace Application.Features.Vehiculo.Commands.UpdateVehiculoCommand
                 throw new KeyNotFoundException("Este cliente no existe" + nameof(Domain.Entities.Vehiculo));
             }
 
-            vehiculo.Placa = request.Placa;
-            vehiculo.Color = request.Color;
-            vehiculo.Kilometraje = request.Kilometraje;
-            vehiculo.AnioModelo = request.AnioModelo;
             
 
             await _repositoryAsync.UpdateAsync(vehiculo);

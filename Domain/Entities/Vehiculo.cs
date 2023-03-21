@@ -4,12 +4,13 @@ namespace Domain.Entities
 {
     public class Vehiculo : AuditableBaseEntity
     {
-        public string Placa { get; set; }
-        public string Color { get; set; }
-        public string Kilometraje { get; set; }
-        public string AnioModelo { get; set; }
-        public int ClienteId { get; set; }        
-        public Cliente Cliente { get; set;}
+        public string Marca { get; set; }
+        public string Modelo { get; set; }
+        public string Anio { get; set; }
+        public string NumeroPlaca { get; set; }
+        public string NumeroMotor { get; set; }
+        public int ClienteId { get; set; }
+        public virtual Cliente Cliente { get; set; }
 
     } 
 }

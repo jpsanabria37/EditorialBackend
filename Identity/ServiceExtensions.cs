@@ -96,14 +96,7 @@ namespace Identity
                 };
             });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                options.Cookie.SameSite = SameSiteMode.Strict;
-                options.Cookie.Path = "/";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-            });
+     
 
         }
     }

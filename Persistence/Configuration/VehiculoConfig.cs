@@ -13,20 +13,13 @@ namespace Persistence.Configuration
             builder.HasKey(c => c.Id);
             builder.Property(p => p.Id).ValueGeneratedOnAdd();
 
-            builder.Property(c => c.Placa)
+            builder.Property(c => c.NumeroPlaca)
                .IsRequired()
                .HasMaxLength(20);
 
-            builder.Property(c => c.Color)
-               .IsRequired()
-               .HasMaxLength(20);
 
-            builder.Property(c => c.AnioModelo)
+            builder.Property(c => c.Anio)
                .IsRequired(false)
-               .HasMaxLength(40);
-
-            builder.Property(c => c.Kilometraje)
-               .IsRequired()
                .HasMaxLength(40);
 
             builder.HasOne(p => p.Cliente) // la propiedad de navegación que hace referencia a la entidad Categoria

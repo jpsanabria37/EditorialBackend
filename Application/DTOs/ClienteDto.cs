@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +21,7 @@ namespace Application.DTOs
         public int Edad { get; set; }
 
         public TipoDocumentoDto TipoDocumento { get; set; }
+
+        public IEnumerable<Vehiculo> Vehiculos { get; set; } = new List<Vehiculo>();
     }
 }
