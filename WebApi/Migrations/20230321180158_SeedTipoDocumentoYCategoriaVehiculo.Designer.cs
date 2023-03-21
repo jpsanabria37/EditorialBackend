@@ -11,8 +11,8 @@ using Persistence.Contexts;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230301030330_AddIsDeletedDefault")]
-    partial class AddIsDeletedDefault
+    [Migration("20230321180158_SeedTipoDocumentoYCategoriaVehiculo")]
+    partial class SeedTipoDocumentoYCategoriaVehiculo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,43 +172,6 @@ namespace WebApi.Migrations
                     b.ToTable("clientes", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Marca", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoriaVehiculoId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(false);
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoriaVehiculoId");
-
-                    b.ToTable("marcas", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.Producto", b =>
                 {
                     b.Property<int>("Id")
@@ -259,6 +222,9 @@ namespace WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoriaVehiculoId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
 
@@ -285,7 +251,12 @@ namespace WebApi.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("varchar(120)");
 
+                    b.Property<double>("Precio")
+                        .HasColumnType("double");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaVehiculoId");
 
                     b.ToTable("servicios", (string)null);
                 });
@@ -334,17 +305,12 @@ namespace WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("AnioModelo")
+                    b.Property<string>("Anio")
                         .HasMaxLength(40)
                         .HasColumnType("varchar(40)");
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
@@ -357,21 +323,25 @@ namespace WebApi.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("Kilometraje")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("varchar(40)");
-
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("MarcaId")
-                        .HasColumnType("int");
+                    b.Property<string>("Marca")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<string>("Placa")
+                    b.Property<string>("Modelo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NumeroMotor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NumeroPlaca")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
@@ -379,8 +349,6 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
-
-                    b.HasIndex("MarcaId");
 
                     b.ToTable("vehiculos", (string)null);
                 });
@@ -396,17 +364,6 @@ namespace WebApi.Migrations
                     b.Navigation("TipoDocumento");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Marca", b =>
-                {
-                    b.HasOne("Domain.Entities.CategoriaVehiculo", "CategoriaVehiculo")
-                        .WithMany("Marcas")
-                        .HasForeignKey("CategoriaVehiculoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CategoriaVehiculo");
-                });
-
             modelBuilder.Entity("Domain.Entities.Producto", b =>
                 {
                     b.HasOne("Domain.Entities.Categoria", "Categoria")
@@ -418,6 +375,17 @@ namespace WebApi.Migrations
                     b.Navigation("Categoria");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Servicio", b =>
+                {
+                    b.HasOne("Domain.Entities.CategoriaVehiculo", "CategoriaVehiculo")
+                        .WithMany("Servicios")
+                        .HasForeignKey("CategoriaVehiculoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CategoriaVehiculo");
+                });
+
             modelBuilder.Entity("Domain.Entities.Vehiculo", b =>
                 {
                     b.HasOne("Domain.Entities.Cliente", "Cliente")
@@ -426,15 +394,7 @@ namespace WebApi.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Marca", "Marca")
-                        .WithMany("Vehiculos")
-                        .HasForeignKey("MarcaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Cliente");
-
-                    b.Navigation("Marca");
                 });
 
             modelBuilder.Entity("Domain.Entities.Categoria", b =>
@@ -444,15 +404,10 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("Domain.Entities.CategoriaVehiculo", b =>
                 {
-                    b.Navigation("Marcas");
+                    b.Navigation("Servicios");
                 });
 
             modelBuilder.Entity("Domain.Entities.Cliente", b =>
-                {
-                    b.Navigation("Vehiculos");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Marca", b =>
                 {
                     b.Navigation("Vehiculos");
                 });

@@ -5,7 +5,7 @@
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedTipoDocumentoYCategoriaVehiculos : Migration
+    public partial class SeedTipoDocumentoYCategoriaVehiculo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
