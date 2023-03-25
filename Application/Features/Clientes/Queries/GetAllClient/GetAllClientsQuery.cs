@@ -43,10 +43,12 @@ namespace Application.Features.Clientes.Queries.GetAllClient
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
+
+            List<Cliente> listadoClientes = null;
             string cacheKey = null;
             byte[] redisListadoClientes = null;
-            List<Cliente> listadoClientes = null;
-            
+
+
 
             if (!string.IsNullOrEmpty(request.Apellido) || !string.IsNullOrEmpty(request.Nombre))
             {

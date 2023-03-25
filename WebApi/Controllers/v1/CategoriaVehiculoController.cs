@@ -14,7 +14,7 @@ namespace WebApi.Controllers.v1
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoriaVehiculo>>> GetAll()
         {
-            var cVehiculos = await Mediator.Send(new GetAllCategoriaVehiculoQuery());
+            var cVehiculos = await Mediator.Send(new GetAllCategoriaVehiculoQueryCache());
             return Ok(cVehiculos);
         }
 

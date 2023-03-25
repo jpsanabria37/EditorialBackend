@@ -32,36 +32,39 @@ namespace Application.Features.TipoDocumentos.Queries.GetAllTipoDocumentoCommand
 
         public async Task<Response<IEnumerable<TipoDocumentoDto>>> Handle(GetAllTipoDocumentoQuery request, CancellationToken cancellationToken)
         {
-            var settings = new JsonSerializerSettings
+          /*  var settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
             var cacheKey = $"listadoTipoDocumentos";
-                string serializedListadoTipoDocumentos;
+                string serializedListadoTipoDocumentos;*/
                 var listadoTipoDocumentos = new List<TipoDocumento>();
-                var redisListadoTipoDocumentos = await _distributedCache.GetAsync(cacheKey);
+            /* var redisListadoTipoDocumentos = await _distributedCache.GetAsync(cacheKey);
 
-                if (redisListadoTipoDocumentos != null)
-                {
-                    serializedListadoTipoDocumentos = Encoding.UTF8.GetString(redisListadoTipoDocumentos);
-                    listadoTipoDocumentos = JsonConvert.DeserializeObject<List<TipoDocumento>>(serializedListadoTipoDocumentos);
-                }
-                else
-                {
-                    var tipo = await _repository.GetAllAsync();
-                    listadoTipoDocumentos = tipo.ToList();
-                    serializedListadoTipoDocumentos = JsonConvert.SerializeObject(listadoTipoDocumentos, settings);
-                    redisListadoTipoDocumentos = Encoding.UTF8.GetBytes(serializedListadoTipoDocumentos);
+             if (redisListadoTipoDocumentos != null)
+             {
+                 serializedListadoTipoDocumentos = Encoding.UTF8.GetString(redisListadoTipoDocumentos);
+                 listadoTipoDocumentos = JsonConvert.DeserializeObject<List<TipoDocumento>>(serializedListadoTipoDocumentos);
+             }
+             else
+             {
+                 var tipo = await _repository.GetAllAsync();
+                 listadoTipoDocumentos = tipo.ToList();
+                 serializedListadoTipoDocumentos = JsonConvert.SerializeObject(listadoTipoDocumentos, settings);
+                 redisListadoTipoDocumentos = Encoding.UTF8.GetBytes(serializedListadoTipoDocumentos);
 
-                    var options = new DistributedCacheEntryOptions()
-                        .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
-                        .SetSlidingExpiration(TimeSpan.FromMinutes(2));
+                 var options = new DistributedCacheEntryOptions()
+                     .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
+                     .SetSlidingExpiration(TimeSpan.FromMinutes(2));
 
-                    await _distributedCache.SetAsync(cacheKey, redisListadoTipoDocumentos, options);
-                }
+                 await _distributedCache.SetAsync(cacheKey, redisListadoTipoDocumentos, options);
+             }
+            */
 
-                var dtos = _mapper.Map<IEnumerable<TipoDocumentoDto>>(listadoTipoDocumentos);
+            var tipo = await _repository.GetAllAsync();
+            listadoTipoDocumentos = tipo.ToList();
+            var dtos = _mapper.Map<IEnumerable<TipoDocumentoDto>>(listadoTipoDocumentos);
                 return new Response<IEnumerable<TipoDocumentoDto>>(dtos);
             
         }

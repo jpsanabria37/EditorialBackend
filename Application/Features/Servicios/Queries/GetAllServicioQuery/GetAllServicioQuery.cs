@@ -32,35 +32,36 @@ namespace Application.Features.Servicios.Queries.GetAllServicioQuery
         public async Task<Response<IEnumerable<ServicioDto>>> Handle(GetAllServicioQuery request, CancellationToken cancellationToken)
         {
 
-            var settings = new JsonSerializerSettings
+           /* var settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
             var cacheKey = $"listadoServicios";
-            string serializedListadoServicios;
+            string serializedListadoServicios;*/
             var listadoServicios = new List<Servicio>();
-            var redisListadoServicios = await _distributedCache.GetAsync(cacheKey);
+            /*  var redisListadoServicios = await _distributedCache.GetAsync(cacheKey);
 
-            if (redisListadoServicios != null)
-            {
-                serializedListadoServicios = Encoding.UTF8.GetString(redisListadoServicios);
-                listadoServicios = JsonConvert.DeserializeObject<List<Servicio>>(serializedListadoServicios);
-            }
-            else
-            {
-                var cVehiculos = await _repositoryAsync.GetAllAsync();
-                listadoServicios = cVehiculos.ToList();
-                serializedListadoServicios = JsonConvert.SerializeObject(listadoServicios, settings);
-                redisListadoServicios = Encoding.UTF8.GetBytes(serializedListadoServicios);
+              if (redisListadoServicios != null)
+              {
+                  serializedListadoServicios = Encoding.UTF8.GetString(redisListadoServicios);
+                  listadoServicios = JsonConvert.DeserializeObject<List<Servicio>>(serializedListadoServicios);
+              }
+              else
+              {
+                  var cVehiculos = await _repositoryAsync.GetAllAsync();
+                  listadoServicios = cVehiculos.ToList();
+                  serializedListadoServicios = JsonConvert.SerializeObject(listadoServicios, settings);
+                  redisListadoServicios = Encoding.UTF8.GetBytes(serializedListadoServicios);
 
-                var options = new DistributedCacheEntryOptions()
-                    .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(2));
+                  var options = new DistributedCacheEntryOptions()
+                      .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
+                      .SetSlidingExpiration(TimeSpan.FromMinutes(2));
 
-                await _distributedCache.SetAsync(cacheKey, redisListadoServicios, options);
-            }
-
+                  await _distributedCache.SetAsync(cacheKey, redisListadoServicios, options);
+              }*/
+            var cVehiculos = await _repositoryAsync.GetAllAsync();
+            listadoServicios = cVehiculos.ToList();
 
             var dtos = _mapper.Map<IEnumerable<ServicioDto>>(listadoServicios);
 

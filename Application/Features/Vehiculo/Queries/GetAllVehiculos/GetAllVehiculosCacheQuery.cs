@@ -4,21 +4,15 @@ using Application.Wrappers;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Vehiculo.Queries.GetAllVehiculos
 {
-    public class GetAllVehiculosQuery : IRequest<Response<IEnumerable<VehiculoDto>>>
+    public class GetAllVehiculosCacheQuery : IRequest<Response<IEnumerable<VehiculoDto>>>
     {
 
     }
 
-    public class GetAllVehiculosQueryHandler : IRequestHandler<GetAllVehiculosQuery, Response<IEnumerable<VehiculoDto>>>
+    public class GetAllVehiculosQueryHandler : IRequestHandler<GetAllVehiculosCacheQuery, Response<IEnumerable<VehiculoDto>>>
     {
         private readonly IRepository<Domain.Entities.Vehiculo> _repository;
         private readonly IDistributedCache _distributedCache;
@@ -29,12 +23,12 @@ namespace Application.Features.Vehiculo.Queries.GetAllVehiculos
             _distributedCache = distributedCache;
             _mapper = mapper;
         }
-        public async Task<Response<IEnumerable<VehiculoDto>>> Handle(GetAllVehiculosQuery request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<VehiculoDto>>> Handle(GetAllVehiculosCacheQuery request, CancellationToken cancellationToken)
         {
-            var cacheKey = $"listadoVehiculos";
-            string serializedListadoVehiculos;
+           /* var cacheKey = $"listadoVehiculos";
+            string serializedListadoVehiculos;*/
             var listadoVehiculos = new List<Domain.Entities.Vehiculo>();
-            var redisListadoVehiculos = await _distributedCache.GetAsync(cacheKey);
+            /*var redisListadoVehiculos = await _distributedCache.GetAsync(cacheKey);
 
             if (redisListadoVehiculos != null)
             {
@@ -54,7 +48,10 @@ namespace Application.Features.Vehiculo.Queries.GetAllVehiculos
 
                 await _distributedCache.SetAsync(cacheKey, redisListadoVehiculos, options);
             }
+            */
 
+            var vehiculos = await _repository.GetAllAsync();
+            listadoVehiculos = vehiculos.ToList();
             var dtos = _mapper.Map<IEnumerable<VehiculoDto>>(listadoVehiculos);
             return new Response<IEnumerable<VehiculoDto>>(dtos);
         }

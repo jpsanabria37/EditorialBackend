@@ -15,7 +15,7 @@ namespace WebApi.Controllers.v1
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Servicio>>> GetAll()
         {
-            var servicios = await Mediator.Send(new GetAllServicioQuery());
+            var servicios = await Mediator.Send(new GetAllServicioQuerySinCache());
             return Ok(servicios);
         }
         [HttpGet("{id}")]
