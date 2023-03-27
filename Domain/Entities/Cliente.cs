@@ -17,8 +17,6 @@ namespace Domain.Entities
 
         public int Edad { get; set; }
 
-        public string Imagen { get; set; } 
-
         public string NumeroDocumento { get; set; }
 
         public int TipoDocumentoId  { get; set; }

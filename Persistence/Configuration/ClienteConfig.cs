@@ -53,13 +53,6 @@ namespace Persistence.Configuration
             builder.Property(c => c.LastModifiedBy)
                .HasMaxLength(30);
           
-            builder.HasIndex(c => c.Email).IsUnique();
-
-            builder.Property(c => c.Imagen)
-            .HasMaxLength(1000) // Establece la longitud máxima de la ruta de la imagen a 1000 caracteres
-            .IsRequired(false) // La imagen es requerida
-            .HasDefaultValue("/images/user_default.png");
-
             builder.HasOne(p => p.TipoDocumento) // la propiedad de navegación que hace referencia a la entidad Categoria
                 .WithMany(c => c.Clientes) // la propiedad de navegación de la entidad Categoria que representa la relación inversa
                 .HasForeignKey(p => p.TipoDocumentoId) // la clave foránea que representa la relación
