@@ -41,16 +41,16 @@ namespace WebApi.Controllers.v1
         public async Task<ActionResult<IEnumerable<VehiculoDto>>> GetAll()
         {
             var vehiculo = await Mediator.Send(new GetAllVehiculosSinCacheQuery());
-            var json = JsonConvert.SerializeObject(vehiculo);
-            return Ok(json);
+
+            return Ok(vehiculo);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<VehiculoDto>> GetVehiculoById(int id)
         {
             var vehiculo = await Mediator.Send(new GetVehiculoByIdQuery { Id = id });
-            var json = JsonConvert.SerializeObject(vehiculo);
-            return Ok(json);
+           
+            return Ok(vehiculo);
         }
     }
 }
