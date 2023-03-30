@@ -31,7 +31,7 @@ namespace Persistence.Repository
 
         public async Task<IEnumerable<CategoriaVehiculo>> GetAllAsync()
         {
-            return await _context.Set<CategoriaVehiculo>().ToListAsync();
+            return await _context.Set<CategoriaVehiculo>().Include(c => c.Servicios).ToListAsync();
         }
 
         public async Task<CategoriaVehiculo> GetByIdAsync(int id)

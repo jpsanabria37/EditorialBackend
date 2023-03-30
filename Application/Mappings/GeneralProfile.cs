@@ -33,8 +33,9 @@ namespace Application.Mappings
             #endregion
             #region CategoriaVehiculo
             CreateMap<CategoriaVehiculo, CategoriaVehiculoDto>();
+            CreateMap<CategoriaVehiculo, CategoriaVehiculoIncludeServiceDto>();
             #endregion
-           
+
             #region Servicio
             CreateMap<Servicio, ServicioDto>();
             #endregion

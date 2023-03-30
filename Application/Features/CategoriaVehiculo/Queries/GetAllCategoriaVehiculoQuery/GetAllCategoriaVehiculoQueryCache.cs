@@ -9,12 +9,12 @@ using System.Text;
 
 namespace Application.Features.CategoriaVehiculo.Queries.GetAllCategoriaVehiculoQuery
 {
-    public class GetAllCategoriaVehiculoQueryCache : IRequest<Response<IEnumerable<CategoriaVehiculoDto>>>
+    public class GetAllCategoriaVehiculoQueryCache : IRequest<Response<IEnumerable<CategoriaVehiculoIncludeServiceDto>>>
     {
 
     }
 
-    public class GetAllCategoriaVehiculoQueryHandler : IRequestHandler<GetAllCategoriaVehiculoQueryCache, Response<IEnumerable<CategoriaVehiculoDto>>>
+    public class GetAllCategoriaVehiculoQueryHandler : IRequestHandler<GetAllCategoriaVehiculoQueryCache, Response<IEnumerable<CategoriaVehiculoIncludeServiceDto>>>
     {
         private readonly IRepository<Domain.Entities.CategoriaVehiculo> _repositoryAsync;
         private readonly IMapper _mapper;
@@ -29,7 +29,7 @@ namespace Application.Features.CategoriaVehiculo.Queries.GetAllCategoriaVehiculo
 
 
 
-        public async Task<Response<IEnumerable<CategoriaVehiculoDto>>> Handle(GetAllCategoriaVehiculoQueryCache request, CancellationToken cancellationToken)
+        public async Task<Response<IEnumerable<CategoriaVehiculoIncludeServiceDto>>> Handle(GetAllCategoriaVehiculoQueryCache request, CancellationToken cancellationToken)
         {
 
            /* var settings = new JsonSerializerSettings
@@ -63,9 +63,9 @@ namespace Application.Features.CategoriaVehiculo.Queries.GetAllCategoriaVehiculo
 
             var cVehiculos = await _repositoryAsync.GetAllAsync();
             listadoCVehiculos = cVehiculos.ToList();
-            var dtos = _mapper.Map<IEnumerable<CategoriaVehiculoDto>>(listadoCVehiculos);
+            var dtos = _mapper.Map<IEnumerable<CategoriaVehiculoIncludeServiceDto>>(listadoCVehiculos);
 
-            return new Response<IEnumerable<CategoriaVehiculoDto>>(dtos);
+            return new Response<IEnumerable<CategoriaVehiculoIncludeServiceDto>>(dtos);
         }
     }
 }
