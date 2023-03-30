@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,7 @@ namespace Application.DTOs.Vehiculo
         public string Anio { get; set; }
         public string NumeroPlaca { get; set; }
         public string NumeroMotor { get; set; }
+
+        public virtual ClienteDto Cliente { get; set; }
     }
 }
