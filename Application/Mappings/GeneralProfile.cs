@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.DTOs.CategoriaVehiculo;
 using Application.DTOs.Cliente;
 using Application.DTOs.Vehiculo;
 using Application.Features.Clientes.Commands.CreateClientCommand;

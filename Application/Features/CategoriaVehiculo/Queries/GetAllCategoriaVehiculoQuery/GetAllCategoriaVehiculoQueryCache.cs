@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.CategoriaVehiculo;
 using Application.Interfaces;
 using Application.Wrappers;
 using AutoMapper;

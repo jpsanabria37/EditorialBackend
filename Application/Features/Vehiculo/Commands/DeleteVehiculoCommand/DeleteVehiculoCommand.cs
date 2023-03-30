@@ -34,11 +34,10 @@ namespace Application.Features.Vehiculo.Commands.DeleteVehiculoCommand
                 throw new KeyNotFoundException($"El Id {request.Id} no existe {nameof(Domain.Entities.Vehiculo)}");
             }
 
-            vehiculo.IsDeleted = true;
 
-            await _repositoryAsync.UpdateAsync(vehiculo);
+            await _repositoryAsync.DeleteAsync(vehiculo);
 
-            return new Response<int>(vehiculo.Id);
+            return new Response<int>("melo");
         }
     }
 }
