@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.DTOs.Cliente;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
