@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -165,8 +165,6 @@ namespace WebApi.Migrations
                     Direccion = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Edad = table.Column<int>(type: "int", nullable: false),
-                    Imagen = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true, defaultValue: "/images/user_default.png")
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     NumeroDocumento = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TipoDocumentoId = table.Column<int>(type: "int", nullable: false),
@@ -223,15 +221,50 @@ namespace WebApi.Migrations
                         column: x => x.ClienteId,
                         principalTable: "clientes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_clientes_Email",
-                table: "clientes",
-                column: "Email",
-                unique: true);
+            migrationBuilder.CreateTable(
+                name: "reparaciones",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FechaInicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    FechaFin = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Comentarios = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Estado = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CostoTotal = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    VehiculoId = table.Column<int>(type: "int", nullable: false),
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Created = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastModified = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_reparaciones", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_reparaciones_clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_reparaciones_vehiculos_VehiculoId",
+                        column: x => x.VehiculoId,
+                        principalTable: "vehiculos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_clientes_TipoDocumentoId",
@@ -242,6 +275,16 @@ namespace WebApi.Migrations
                 name: "IX_productos_CategoriaId",
                 table: "productos",
                 column: "CategoriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_reparaciones_ClienteId",
+                table: "reparaciones",
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_reparaciones_VehiculoId",
+                table: "reparaciones",
+                column: "VehiculoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_servicios_CategoriaVehiculoId",
@@ -261,13 +304,16 @@ namespace WebApi.Migrations
                 name: "productos");
 
             migrationBuilder.DropTable(
+                name: "reparaciones");
+
+            migrationBuilder.DropTable(
                 name: "servicios");
 
             migrationBuilder.DropTable(
-                name: "vehiculos");
+                name: "categorias");
 
             migrationBuilder.DropTable(
-                name: "categorias");
+                name: "vehiculos");
 
             migrationBuilder.DropTable(
                 name: "categoria_vehiculos");

@@ -30,7 +30,7 @@ namespace Application.Features.Clientes.Commands.UpdateClientCommand
 
             RuleFor(c => c.Telefono)
                .NotEmpty().WithMessage("{PropertyName} no puede quedar vacio.")
-               .Matches(@"^(\+57|0)[0-9]{10}$").WithMessage("{PropertyName} Debe cumplir el formato +573195029874")
+               //.Matches(@"^(\+57|0)[0-9]{10}$").WithMessage("{PropertyName} Debe cumplir el formato +573195029874")
                .MaximumLength(14).WithMessage("{PropertyName} no debe exceder de {MaxLength} carácteres.");
 
             RuleFor(c => c.Direccion)

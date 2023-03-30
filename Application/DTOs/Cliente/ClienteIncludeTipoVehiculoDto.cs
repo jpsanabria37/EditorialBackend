@@ -1,13 +1,13 @@
-﻿using Domain.Entities;
+﻿using Application.DTOs.Vehiculo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOs
+namespace Application.DTOs.Cliente
 {
-    public class ClienteDto
+    public class ClienteIncludeTipoVehiculoDto
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
@@ -22,6 +22,6 @@ namespace Application.DTOs
 
         public TipoDocumentoDto TipoDocumento { get; set; }
 
-        public IEnumerable<Vehiculo> Vehiculos { get; set; } = new List<Vehiculo>();
+        public IEnumerable<VehiculoDto> Vehiculos { get; set; } = new List<VehiculoDto>();
     }
 }

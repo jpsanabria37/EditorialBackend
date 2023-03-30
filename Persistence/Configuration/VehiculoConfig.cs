@@ -22,17 +22,15 @@ namespace Persistence.Configuration
                .IsRequired(false)
                .HasMaxLength(40);
 
-            builder.HasOne(p => p.Cliente) // la propiedad de navegación que hace referencia a la entidad Categoria
-               .WithMany(c => c.Vehiculos) // la propiedad de navegación de la entidad Categoria que representa la relación inversa
-               .HasForeignKey(p => p.ClienteId) // la clave foránea que representa la relación
+            builder.HasOne(p => p.Cliente) 
+               .WithMany(c => c.Vehiculos) 
+               .HasForeignKey(p => p.ClienteId) 
                .IsRequired()
-               .OnDelete(DeleteBehavior.Restrict);
-
+               .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(c => c.IsDeleted)
-           .HasDefaultValue(false);
+        .HasDefaultValue(false);
 
-            builder.HasQueryFilter(c => !c.IsDeleted);
         }
     }
 }

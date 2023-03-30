@@ -204,6 +204,62 @@ namespace WebApi.Migrations
                     b.ToTable("productos", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Reparacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comentarios")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<decimal>("CostoTotal")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Estado")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime?>("FechaFin")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("FechaInicio")
+                        .IsRequired()
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("VehiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("VehiculoId");
+
+                    b.ToTable("reparaciones", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Servicio", b =>
                 {
                     b.Property<int>("Id")
@@ -346,8 +402,7 @@ namespace WebApi.Migrations
                     b.HasOne("Domain.Entities.TipoDocumento", "TipoDocumento")
                         .WithMany("Clientes")
                         .HasForeignKey("TipoDocumentoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("TipoDocumento");
                 });
@@ -361,6 +416,25 @@ namespace WebApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Categoria");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Reparacion", b =>
+                {
+                    b.HasOne("Domain.Entities.Cliente", "Cliente")
+                        .WithMany("Reparaciones")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Vehiculo", "Vehiculo")
+                        .WithMany("Reparaciones")
+                        .HasForeignKey("VehiculoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Vehiculo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Servicio", b =>
@@ -379,7 +453,7 @@ namespace WebApi.Migrations
                     b.HasOne("Domain.Entities.Cliente", "Cliente")
                         .WithMany("Vehiculos")
                         .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");
@@ -397,12 +471,19 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("Domain.Entities.Cliente", b =>
                 {
+                    b.Navigation("Reparaciones");
+
                     b.Navigation("Vehiculos");
                 });
 
             modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
                 {
                     b.Navigation("Clientes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Vehiculo", b =>
+                {
+                    b.Navigation("Reparaciones");
                 });
 #pragma warning restore 612, 618
         }

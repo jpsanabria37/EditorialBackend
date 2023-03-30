@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 using Application.Wrappers;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Text.Json;
 
@@ -36,6 +37,12 @@ namespace WebApi.Middlewares
                         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                         response.Succeeded = false;
                         response.Message = e.Message;
+                        break;
+                   case DbUpdateException e when (e.InnerException?.InnerException is Microsoft.Data.SqlClient.SqlException sqlEx && sqlEx.Number == 547):
+                        // Excepción de restricción de clave foránea (FK)
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        response.Succeeded = false;
+                        response.Message = "No se puede borrar porque tiene asociado otras entidades";
                         break;
                     default:
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

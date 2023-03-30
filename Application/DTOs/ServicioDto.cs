@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,6 @@ namespace Application.DTOs
         public string Nombre { get; set; }
         public string? Descripcion { get; set; }
         public double Precio { get; set; }
+        public CategoriaVehiculoDto CategoriaVehiculo { get; set; }
     }
 }

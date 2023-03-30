@@ -56,13 +56,11 @@ namespace Persistence.Configuration
             builder.HasOne(p => p.TipoDocumento) // la propiedad de navegación que hace referencia a la entidad Categoria
                 .WithMany(c => c.Clientes) // la propiedad de navegación de la entidad Categoria que representa la relación inversa
                 .HasForeignKey(p => p.TipoDocumentoId) // la clave foránea que representa la relación
-                .IsRequired()
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(c => c.IsDeleted)
-           .HasDefaultValue(false);
-
-            builder.HasQueryFilter(c => !c.IsDeleted);
+        .HasDefaultValue(false);
 
         }
     }

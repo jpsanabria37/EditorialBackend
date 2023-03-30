@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Cliente;
 using Application.Interfaces;
 using Application.Wrappers;
 using AutoMapper;
@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Clientes.Queries.GetByIdClient
 {
-    public class GetClientByIdQuery : IRequest<Response<ClienteDto>>
+    public class GetClientByIdQuery : IRequest<Response<ClienteIncludeTipoVehiculoDto>>
     {
         public int Id { get; set; }
     }
-    public class GetClientByIdHandler : IRequestHandler<GetClientByIdQuery, Response<ClienteDto>>
+    public class GetClientByIdHandler : IRequestHandler<GetClientByIdQuery, Response<ClienteIncludeTipoVehiculoDto>>
     {
 
         private readonly IRepository<Cliente> _repositoryAsync;
@@ -28,7 +28,7 @@ namespace Application.Features.Clientes.Queries.GetByIdClient
             _mapper = mapper;
         }
 
-        public async Task<Response<ClienteDto>> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Response<ClienteIncludeTipoVehiculoDto>> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
         {
             var cliente = await _repositoryAsync.GetByIdAsync(request.Id);
 
@@ -37,9 +37,9 @@ namespace Application.Features.Clientes.Queries.GetByIdClient
                 throw new KeyNotFoundException("Este cliente no existe");
             }
 
-            var result = _mapper.Map<ClienteDto>(cliente);
+            var result = _mapper.Map<ClienteIncludeTipoVehiculoDto>(cliente);
 
-            return new Response<ClienteDto>(result);
+            return new Response<ClienteIncludeTipoVehiculoDto>(result);
 
         }
     }

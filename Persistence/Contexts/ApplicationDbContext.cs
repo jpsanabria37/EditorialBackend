@@ -2,6 +2,7 @@
 using Domain.Common;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+
 using System.Reflection;
 
 namespace Persistence.Contexts
@@ -17,6 +18,7 @@ namespace Persistence.Contexts
         }
 
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Reparacion> Reparaciones { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
@@ -43,7 +45,7 @@ namespace Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());     
         }
     }
 }

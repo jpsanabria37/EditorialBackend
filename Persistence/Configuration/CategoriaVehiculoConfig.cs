@@ -27,10 +27,9 @@ namespace Persistence.Configuration
                .IsRequired(false)
                .HasMaxLength(120);
 
-
             builder.Property(c => c.IsDeleted)
-           .HasDefaultValue(false);
-            builder.HasQueryFilter(c => !c.IsDeleted);
+        .HasDefaultValue(false);
+
 
         }
     }

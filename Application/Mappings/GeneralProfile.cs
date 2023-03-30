@@ -1,5 +1,8 @@
 ﻿using Application.DTOs;
+using Application.DTOs.Cliente;
+using Application.DTOs.Vehiculo;
 using Application.Features.Clientes.Commands.CreateClientCommand;
+using Application.Features.Reparaciones.Commands.CreateCommandReparacion;
 using Application.Features.Servicios.Commands.CreateServicioCommand;
 using Application.Features.Vehiculo.Commands.CreateVehiculoCommand;
 using AutoMapper;
@@ -18,9 +21,11 @@ namespace Application.Mappings
                  new DateTime(DateTime.Now.Subtract(src.FechaNacimiento).Ticks).Year - 1));
             CreateMap<CreateServicioCommand, Servicio>();
             CreateMap<CreateVehiculoCommand, Vehiculo>();
+            CreateMap<CreateCommandReparacion, Reparacion>();
             #endregion
             #region Cliente
             CreateMap<Cliente, ClienteDto>();
+            CreateMap<Cliente, ClienteIncludeTipoVehiculoDto>();
             #endregion
             #region TipoDocumento
             CreateMap<TipoDocumento, TipoDocumentoDto>();
@@ -34,6 +39,7 @@ namespace Application.Mappings
             #endregion
             #region Vehiculo
             CreateMap<Vehiculo, VehiculoDto>();
+            CreateMap<Vehiculo, VehiculoIncludeClienteDto>();
             #endregion
 
 

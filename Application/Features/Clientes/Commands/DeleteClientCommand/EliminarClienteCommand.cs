@@ -31,11 +31,11 @@ namespace Application.Features.Clientes.Commands.DeleteClientCommand
                 throw new KeyNotFoundException($"El Id {request.Id} no existe {nameof(Cliente)}");
             }
 
-            cliente.IsDeleted = true;
+            
 
-            await _repositoryAsync.UpdateAsync(cliente);
+            await _repositoryAsync.DeleteAsync(cliente);
 
-            return new Response<int>(cliente.Id);
+            return new Response<int>("bien");
         }
     }
 }

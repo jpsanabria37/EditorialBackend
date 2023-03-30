@@ -24,5 +24,6 @@ namespace Domain.Entities
 
         public IEnumerable<Vehiculo> Vehiculos { get; set; } = new List<Vehiculo>();
 
+        public IEnumerable<Reparacion> Reparaciones { get; set; } = new List<Reparacion>();
     }
 }

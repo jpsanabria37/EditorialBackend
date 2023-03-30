@@ -12,5 +12,7 @@ namespace Domain.Entities
         public int ClienteId { get; set; }
         public virtual Cliente Cliente { get; set; }
 
+        public IEnumerable<Reparacion> Reparaciones { get; set; } = new List<Reparacion>();
+
     } 
 }

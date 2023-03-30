@@ -23,7 +23,6 @@ namespace Persistence.Repository
         {
             _context.Set<Cliente>().Remove(entity);
             await SaveAsync();
-
         }
 
         public async Task<bool> ExisteEmail(string email)
